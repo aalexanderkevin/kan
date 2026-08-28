@@ -1,6 +1,8 @@
 import { t } from "@lingui/core/macro";
+import { useRef, useState } from "react";
+import { env } from "next-runtime-env";
 import { useForm } from "react-hook-form";
-import { HiOutlineArrowUp } from "react-icons/hi2";
+import { HiOutlineArrowUp, HiOutlinePaperClip, HiXMark } from "react-icons/hi2";
 
 import type { WorkspaceMember } from "~/components/Editor";
 import Editor from "~/components/Editor";
@@ -25,6 +27,8 @@ const NewCommentForm = ({
   const utils = api.useUtils();
   const { showPopup } = usePopup();
   const { canCreateComment } = usePermissions();
+  const [files, setFiles] = useState<File[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { handleSubmit, setValue, watch, reset } = useForm<FormValues>({
     values: {
       comment: "",
@@ -39,9 +43,36 @@ const NewCommentForm = ({
         icon: "error",
       });
     },
-    onSettled: async () => {
-      reset();
-      await invalidateCard(utils, cardPublicId);
+    onSuccess: async (newComment) => {
+      try {
+        const baseUrl = env("NEXT_PUBLIC_BASE_URL") ?? "";
+        await Promise.all(
+          files.map(async (file) => {
+            const response = await fetch(
+              `${baseUrl}/api/upload/attachment?cardPublicId=${encodeURIComponent(cardPublicId)}&commentPublicId=${encodeURIComponent(newComment.publicId)}`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": file.type || "application/octet-stream",
+                  "x-original-filename": encodeURIComponent(file.name),
+                },
+                body: file,
+              },
+            );
+            if (!response.ok) throw new Error("Upload failed");
+          }),
+        );
+      } catch {
+        showPopup({
+          header: t`Upload failed`,
+          message: t`Your comment was added, but one or more files could not be uploaded.`,
+          icon: "error",
+        });
+      } finally {
+        setFiles([]);
+        reset();
+        await invalidateCard(utils, cardPublicId);
+      }
     },
   });
 
@@ -49,6 +80,7 @@ const NewCommentForm = ({
     addCommentMutation.mutate({
       cardPublicId,
       comment: data.comment,
+      attachmentCount: files.length,
     });
   };
 
@@ -85,11 +117,56 @@ const NewCommentForm = ({
         placeholder={t`Add comment... (type '/' to open commands or '@' to mention)`}
         disableHeadings={true}
       />
-      <div className="flex justify-end">
+      <input
+        ref={inputRef}
+        type="file"
+        className="hidden"
+        multiple
+        onChange={(event) => {
+          setFiles((current) => [
+            ...current,
+            ...Array.from(event.target.files ?? []),
+          ]);
+          event.target.value = "";
+        }}
+      />
+      {files.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {files.map((file, index) => (
+            <span
+              key={`${file.name}-${file.lastModified}-${index}`}
+              className="flex max-w-full items-center gap-1 rounded-md bg-light-300 px-2 py-1 text-xs dark:bg-dark-300"
+            >
+              <span className="truncate">{file.name}</span>
+              <button
+                type="button"
+                onClick={() =>
+                  setFiles((current) => current.filter((_, i) => i !== index))
+                }
+                aria-label={`Remove ${file.name}`}
+              >
+                <HiXMark className="h-4 w-4" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+      <div className="mt-3 flex justify-between">
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-light-300 dark:hover:bg-dark-300"
+          aria-label={t`Attach files`}
+        >
+          <HiOutlinePaperClip />
+        </button>
         <Tooltip content={submitTooltip} placement="top">
           <button
             type="submit"
-            disabled={addCommentMutation.isPending}
+            disabled={
+              addCommentMutation.isPending ||
+              (!watch("comment").trim() && files.length === 0)
+            }
             className="flex h-8 w-8 items-center justify-center rounded-full border border-light-600 bg-light-300 hover:bg-light-400 disabled:opacity-50 dark:border-dark-400 dark:bg-dark-200 dark:hover:bg-dark-400"
           >
             {addCommentMutation.isPending ? (

@@ -284,7 +284,7 @@ export const comments = pgTable("card_comments", {
   }),
 }).enableRLS();
 
-export const commentsRelations = relations(comments, ({ one }) => ({
+export const commentsRelations = relations(comments, ({ one, many }) => ({
   card: one(cards, {
     fields: [comments.cardId],
     references: [cards.id],
@@ -300,25 +300,34 @@ export const commentsRelations = relations(comments, ({ one }) => ({
     references: [users.id],
     relationName: "commentsDeletedByUser",
   }),
+  attachments: many(cardAttachments, { relationName: "commentAttachments" }),
 }));
 
-export const cardAttachments = pgTable("card_attachment", {
-  id: bigserial("id", { mode: "number" }).primaryKey(),
-  publicId: varchar("publicId", { length: 12 }).notNull().unique(),
-  cardId: bigint("cardId", { mode: "number" })
-    .notNull()
-    .references(() => cards.id, { onDelete: "cascade" }),
-  filename: varchar("filename", { length: 255 }).notNull(),
-  originalFilename: varchar("originalFilename", { length: 255 }).notNull(),
-  contentType: varchar("contentType", { length: 100 }).notNull(),
-  size: bigint("size", { mode: "number" }).notNull(),
-  s3Key: varchar("s3Key", { length: 500 }).notNull(),
-  createdBy: uuid("createdBy").references(() => users.id, {
-    onDelete: "set null",
-  }),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  deletedAt: timestamp("deletedAt"),
-}).enableRLS();
+export const cardAttachments = pgTable(
+  "card_attachment",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    publicId: varchar("publicId", { length: 12 }).notNull().unique(),
+    cardId: bigint("cardId", { mode: "number" })
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    commentId: bigint("commentId", { mode: "number" }).references(
+      () => comments.id,
+      { onDelete: "cascade" },
+    ),
+    filename: varchar("filename", { length: 255 }).notNull(),
+    originalFilename: varchar("originalFilename", { length: 255 }).notNull(),
+    contentType: varchar("contentType", { length: 100 }).notNull(),
+    size: bigint("size", { mode: "number" }).notNull(),
+    s3Key: varchar("s3Key", { length: 500 }).notNull(),
+    createdBy: uuid("createdBy").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    deletedAt: timestamp("deletedAt"),
+  },
+  (table) => [index("card_attachment_comment_idx").on(table.commentId)],
+).enableRLS();
 
 export const cardAttachmentsRelations = relations(
   cardAttachments,
@@ -332,6 +341,11 @@ export const cardAttachmentsRelations = relations(
       fields: [cardAttachments.createdBy],
       references: [users.id],
       relationName: "cardAttachmentsCreatedByUser",
+    }),
+    comment: one(comments, {
+      fields: [cardAttachments.commentId],
+      references: [comments.id],
+      relationName: "commentAttachments",
     }),
   }),
 );

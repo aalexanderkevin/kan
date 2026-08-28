@@ -44,7 +44,14 @@ export function AttachmentThumbnails({
   const nonImageAttachments =
     attachments?.filter(
       (attachment) =>
-        !attachment.contentType.startsWith("image/") && attachment.url,
+        !attachment.contentType.startsWith("image/") &&
+        !attachment.contentType.startsWith("video/") &&
+        attachment.url,
+    ) ?? [];
+  const videoAttachments =
+    attachments?.filter(
+      (attachment) =>
+        attachment.contentType.startsWith("video/") && attachment.url,
     ) ?? [];
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -110,7 +117,11 @@ export function AttachmentThumbnails({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedIndex, imageAttachments.length]);
 
-  if (imageAttachments.length === 0 && nonImageAttachments.length === 0) {
+  if (
+    imageAttachments.length === 0 &&
+    videoAttachments.length === 0 &&
+    nonImageAttachments.length === 0
+  ) {
     return null;
   }
 
@@ -178,6 +189,25 @@ export function AttachmentThumbnails({
           );
         })}
       </div>
+
+      {videoAttachments.length > 0 && (
+        <div className="mb-3 grid gap-2 sm:grid-cols-2">
+          {videoAttachments.map((attachment) => (
+            <video
+              key={attachment.publicId}
+              controls
+              preload="metadata"
+              className="max-h-72 w-full rounded-xl border border-light-300 bg-black dark:border-dark-300"
+            >
+              <source
+                src={attachment.url ?? undefined}
+                type={attachment.contentType}
+              />
+              {attachment.originalFilename ?? "Video"}
+            </video>
+          ))}
+        </div>
+      )}
 
       {nonImageAttachments.length > 0 && (
         <div className="mb-3 flex flex-col gap-2">

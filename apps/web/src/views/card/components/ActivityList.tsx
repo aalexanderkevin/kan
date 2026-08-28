@@ -526,6 +526,7 @@ const ActivityList = ({
               isEdited={!!activity.comment?.updatedAt}
               isAuthor={activity.comment?.createdBy === sessionData?.user.id}
               isViewOnly={!!isViewOnly}
+              attachments={activity.comment?.attachments ?? []}
             />
           );
 

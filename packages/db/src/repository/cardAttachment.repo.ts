@@ -23,6 +23,7 @@ export const create = async (
     size: number;
     s3Key: string;
     createdBy: string;
+    commentId?: number;
   },
 ) => {
   const [result] = await db
@@ -30,6 +31,7 @@ export const create = async (
     .values({
       publicId: generateUID(),
       cardId: attachmentInput.cardId,
+      commentId: attachmentInput.commentId,
       filename: attachmentInput.filename,
       originalFilename: attachmentInput.originalFilename,
       contentType: attachmentInput.contentType,
@@ -56,6 +58,11 @@ export const getByPublicId = (db: dbClient, publicId: string) => {
   return db.query.cardAttachments.findFirst({
     where: eq(cardAttachments.publicId, publicId),
     with: {
+      comment: {
+        columns: {
+          createdBy: true,
+        },
+      },
       card: {
         columns: {
           id: true,

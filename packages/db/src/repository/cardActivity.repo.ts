@@ -2,7 +2,7 @@ import { and, asc, count, eq, gt, inArray, isNull, or } from "drizzle-orm";
 
 import type { dbClient } from "@kan/db/client";
 import type { ActivityType } from "@kan/db/schema";
-import { cardActivities, comments } from "@kan/db/schema";
+import { cardActivities, cardAttachments, comments } from "@kan/db/schema";
 import { generateUID } from "@kan/shared/utils";
 
 export const getCount = async (db: dbClient) => {
@@ -192,6 +192,19 @@ export const getPaginatedActivities = async (
           createdBy: true,
           updatedAt: true,
           deletedAt: true,
+        },
+        with: {
+          attachments: {
+            columns: {
+              publicId: true,
+              contentType: true,
+              s3Key: true,
+              originalFilename: true,
+              size: true,
+            },
+            where: isNull(cardAttachments.deletedAt),
+            orderBy: asc(cardAttachments.createdAt),
+          },
         },
       },
       attachment: {

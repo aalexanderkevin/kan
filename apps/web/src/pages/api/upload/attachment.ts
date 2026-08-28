@@ -3,11 +3,12 @@ import { Upload } from "@aws-sdk/lib-storage";
 
 import { createNextApiContext } from "@kan/api/trpc";
 import { withApiLogging } from "@kan/api/utils/apiLogging";
-import { assertPermission } from "@kan/api/utils/permissions";
+import { assertCanEdit, assertPermission } from "@kan/api/utils/permissions";
 import { withRateLimit } from "@kan/api/utils/rateLimit";
 import * as cardRepo from "@kan/db/repository/card.repo";
 import * as cardActivityRepo from "@kan/db/repository/cardActivity.repo";
 import * as cardAttachmentRepo from "@kan/db/repository/cardAttachment.repo";
+import * as cardCommentRepo from "@kan/db/repository/cardComment.repo";
 import { createS3Client, generateUID } from "@kan/shared/utils";
 
 import { env } from "~/env";
@@ -45,6 +46,10 @@ export default withRateLimit(
       const cardPublicId = req.query.cardPublicId;
       if (typeof cardPublicId !== "string" || cardPublicId.length < 12) {
         return res.status(400).json({ error: "Invalid cardPublicId" });
+      }
+      const commentPublicId = req.query.commentPublicId;
+      if (commentPublicId !== undefined && typeof commentPublicId !== "string") {
+        return res.status(400).json({ error: "Invalid commentPublicId" });
       }
 
       const contentType = req.headers["content-type"];
@@ -91,14 +96,39 @@ export default withRateLimit(
         return res.status(404).json({ error: "Card not found" });
       }
 
-      // Check if user has permission to edit the card
+      let commentId: number | undefined;
+
+      if (commentPublicId) {
+        const comment = await cardCommentRepo.getByPublicId(db, commentPublicId);
+        if (!comment || comment.deletedAt || comment.cardId !== card.id) {
+          return res.status(404).json({ error: "Comment not found" });
+        }
+
+        try {
+          await assertCanEdit(
+            db,
+            user.id,
+            card.workspaceId,
+            "comment:edit",
+            comment.createdBy,
+          );
+        } catch {
+          return res.status(403).json({ error: "Permission denied" });
+        }
+
+        commentId = comment.id;
+      }
+
+      // Card-level attachments require card editing permission.
       try {
-        await assertPermission(db, user.id, card.workspaceId, "card:edit");
+        if (!commentPublicId) {
+          await assertPermission(db, user.id, card.workspaceId, "card:edit");
+        }
       } catch {
         return res.status(403).json({ error: "Permission denied" });
       }
 
-      const s3Key = `${card.workspaceId}/${cardPublicId}/${generateUID()}-${sanitizedFilename}`;
+      const s3Key = `${card.workspaceId}/${cardPublicId}${commentPublicId ? `/comments/${commentPublicId}` : ""}/${generateUID()}-${sanitizedFilename}`;
 
       const client = createS3Client();
 
@@ -119,6 +149,7 @@ export default withRateLimit(
       // Create attachment record and log activity
       const attachment = await cardAttachmentRepo.create(db, {
         cardId: card.id,
+        commentId,
         filename: sanitizedFilename,
         originalFilename: originalFilenameHeader,
         contentType,
@@ -131,13 +162,15 @@ export default withRateLimit(
         return res.status(500).json({ error: "Failed to create attachment" });
       }
 
-      await cardActivityRepo.create(db, {
-        type: "card.updated.attachment.added",
-        cardId: card.id,
-        attachmentId: attachment.id,
-        toTitle: originalFilenameHeader,
-        createdBy: user.id,
-      });
+      if (!commentId) {
+        await cardActivityRepo.create(db, {
+          type: "card.updated.attachment.added",
+          cardId: card.id,
+          attachmentId: attachment.id,
+          toTitle: originalFilenameHeader,
+          createdBy: user.id,
+        });
+      }
 
       return res.status(200).json({ attachment });
     } catch (error) {

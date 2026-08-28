@@ -15,6 +15,7 @@ import { usePopup } from "~/providers/popup";
 import { api } from "~/utils/api";
 import { invalidateCard } from "~/utils/cardInvalidation";
 import { getAvatarUrl } from "~/utils/helpers";
+import { AttachmentThumbnails } from "./AttachmentThumbnails";
 
 interface FormValues {
   comment: string;
@@ -32,6 +33,7 @@ const Comment = ({
   isAuthor,
   isEdited = false,
   isViewOnly = false,
+  attachments = [],
 }: {
   publicId: string | undefined;
   cardPublicId: string;
@@ -44,6 +46,14 @@ const Comment = ({
   isAuthor: boolean;
   isEdited: boolean;
   isViewOnly: boolean;
+  attachments?: {
+    publicId: string;
+    contentType: string;
+    s3Key: string;
+    originalFilename: string | null;
+    size: number | null;
+    url: string | null;
+  }[];
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const utils = api.useUtils();
@@ -172,6 +182,11 @@ const Comment = ({
             workspaceMembers={workspaceMembers}
             enableYouTubeEmbed={false}
             disableHeadings={true}
+          />
+          <AttachmentThumbnails
+            attachments={attachments}
+            cardPublicId={cardPublicId}
+            isReadOnly={isViewOnly || !isAuthor}
           />
         </div>
       ) : (

@@ -207,6 +207,16 @@ export const activityItemSchema = z.object({
       createdBy: z.string().nullable(),
       updatedAt: z.date().nullable(),
       deletedAt: z.date().nullable(),
+      attachments: z.array(
+        z.object({
+          publicId: z.string(),
+          contentType: z.string(),
+          s3Key: z.string(),
+          originalFilename: z.string().nullable(),
+          size: z.number().nullable(),
+          url: z.string().nullable(),
+        }),
+      ),
     })
     .nullable(),
   attachment: z

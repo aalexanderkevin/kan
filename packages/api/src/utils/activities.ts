@@ -21,10 +21,10 @@ const MERGEABLE_LIST_TYPES: readonly ActivityType[] = [
 
 const MERGE_TIME_WINDOW_MS = 5 * 60 * 1000; // 5 minutes window for merging activities
 
-export function mergeActivities(activities: Activity[]): Activity[] {
+export function mergeActivities<T extends Activity>(activities: T[]): T[] {
   if (activities.length === 0) return [];
 
-  const merged: Activity[] = [];
+  const merged: T[] = [];
   let i = 0;
 
   while (i < activities.length) {
@@ -46,7 +46,7 @@ export function mergeActivities(activities: Activity[]): Activity[] {
       continue;
     }
 
-    const group: Activity[] = [current];
+    const group: T[] = [current];
     let j = i + 1;
 
     while (j < activities.length) {

@@ -226,8 +226,14 @@ export const cardRouter = createTRPCRouter({
     .input(
       z.object({
         cardPublicId: z.string().min(12),
-        comment: z.string().min(1),
-      }),
+        comment: z.string(),
+        attachmentCount: z.number().int().nonnegative().optional().default(0),
+      })
+        .refine(
+          (input) =>
+            input.comment.trim().length > 0 || input.attachmentCount > 0,
+          { message: "A comment or attachment is required" },
+        ),
     )
     .output(commentResponseSchema)
     .mutation(async ({ ctx, input }) => {
@@ -831,7 +837,22 @@ export const cardRouter = createTRPCRouter({
             };
           }
 
-          return updatedActivity;
+          const commentWithAttachmentUrls = activity.comment
+            ? {
+                ...activity.comment,
+                attachments: await Promise.all(
+                  activity.comment.attachments.map(async (attachment) => ({
+                    ...attachment,
+                    url: await generateAttachmentUrl(attachment.s3Key),
+                  })),
+                ),
+              }
+            : null;
+
+          return {
+            ...updatedActivity,
+            comment: commentWithAttachmentUrls,
+          };
         }),
       );
 

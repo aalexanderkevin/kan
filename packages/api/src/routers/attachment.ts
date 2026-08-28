@@ -9,7 +9,7 @@ import { generateUID } from "@kan/shared/utils";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { attachmentConfirmResponseSchema } from "../schemas";
-import { assertPermission } from "../utils/permissions";
+import { assertCanEdit, assertPermission } from "../utils/permissions";
 import { deleteObject, generateUploadUrl } from "@kan/shared/utils";
 
 export const attachmentRouter = createTRPCRouter({
@@ -194,7 +194,17 @@ export const attachmentRouter = createTRPCRouter({
         });
 
       const workspaceId = attachment.card.list.board.workspaceId;
-      await assertPermission(ctx.db, userId, workspaceId, "card:edit");
+      if (attachment.comment) {
+        await assertCanEdit(
+          ctx.db,
+          userId,
+          workspaceId,
+          "comment:edit",
+          attachment.comment.createdBy,
+        );
+      } else {
+        await assertPermission(ctx.db, userId, workspaceId, "card:edit");
+      }
 
       const bucket = process.env.NEXT_PUBLIC_ATTACHMENTS_BUCKET_NAME;
       if (bucket) {
