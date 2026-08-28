@@ -1,0 +1,36 @@
+services:
+  migrate:
+    image: kan-migrate:local
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+      target: migrate
+    env_file:
+      - ${KAN_ENV_FILE:-.env.server}
+    networks:
+      - kan-network
+    restart: "no"
+
+  web:
+    image: kan:local
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+      target: web
+    ports:
+      - "${KAN_WEB_PORT:-3000}:3000"
+    env_file:
+      - ${KAN_ENV_FILE:-.env.server}
+    environment:
+      NEXT_PUBLIC_ALLOW_CREDENTIALS: "true"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    networks:
+      - kan-network
+    restart: unless-stopped
+
+networks:
+  kan-network:
+    external: true
+    name: kan-network
