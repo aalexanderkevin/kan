@@ -160,7 +160,7 @@ export default function SideNavigation({
             {!isCollapsed && (
               <Link href="/" className="block">
                 <h1 className="pl-2 text-[16px] font-bold tracking-tight text-neutral-900 dark:text-dark-1000">
-                  kan.bn
+                  cakramotor11
                 </h1>
               </Link>
             )}
