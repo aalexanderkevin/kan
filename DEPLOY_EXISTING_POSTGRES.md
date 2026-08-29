@@ -54,9 +54,10 @@ docker compose -f docker-compose.existing-postgres.yml logs migrate
 docker compose -f docker-compose.existing-postgres.yml ps
 ```
 
-Kan listens on port `3000` by default. Set `KAN_WEB_PORT` in the shell before
-starting Compose if that host port is occupied. Put a reverse proxy with TLS in
-front of the port for public access.
+Kan listens on `127.0.0.1:3000` by default. Set `KAN_WEB_PORT` in the shell
+before starting Compose if that host port is occupied. Put a reverse proxy with
+TLS in front of the port for public access; the application port is not exposed
+directly to the internet.
 
 ## Updating Kan
 

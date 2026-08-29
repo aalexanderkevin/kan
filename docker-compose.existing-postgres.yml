@@ -18,7 +18,7 @@ services:
       dockerfile: ./apps/web/Dockerfile
       target: web
     ports:
-      - "${KAN_WEB_PORT:-3000}:3000"
+      - "127.0.0.1:${KAN_WEB_PORT:-3000}:3000"
     env_file:
       - ${KAN_ENV_FILE:-.env.server}
     environment:
