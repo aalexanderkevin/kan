@@ -1,4 +1,4 @@
-import { and, count, eq, isNull } from "drizzle-orm";
+import { and, count, desc, eq, isNull } from "drizzle-orm";
 
 import type { dbClient } from "@kan/db/client";
 import type { NotificationType } from "@kan/db/schema";
@@ -58,6 +58,10 @@ export const exists = async (
         conditions.push(eq(notifications.workspaceId, args.workspaceId));
       }
 
+      if (args.commentId) {
+        conditions.push(eq(notifications.commentId, args.commentId));
+      }
+
       return and(...conditions);
     },
   });
@@ -78,6 +82,65 @@ export const markAsRead = async (
   return result;
 };
 
+export const getByPublicIdForUser = async (
+  db: dbClient,
+  args: { notificationPublicId: string; userId: string },
+) => {
+  return db.query.notifications.findFirst({
+    columns: {
+      id: true,
+      publicId: true,
+      readAt: true,
+    },
+    where: and(
+      eq(notifications.publicId, args.notificationPublicId),
+      eq(notifications.userId, args.userId),
+      isNull(notifications.deletedAt),
+    ),
+  });
+};
+
+export const getForUser = async (
+  db: dbClient,
+  args: { userId: string; limit: number },
+) => {
+  return db.query.notifications.findMany({
+    columns: {
+      publicId: true,
+      type: true,
+      readAt: true,
+      createdAt: true,
+    },
+    where: and(
+      eq(notifications.userId, args.userId),
+      isNull(notifications.deletedAt),
+    ),
+    with: {
+      card: {
+        columns: {
+          publicId: true,
+          title: true,
+        },
+      },
+    },
+    orderBy: [desc(notifications.createdAt)],
+    limit: args.limit,
+  });
+};
+
+export const markAllAsRead = async (db: dbClient, userId: string) => {
+  await db
+    .update(notifications)
+    .set({ readAt: new Date() })
+    .where(
+      and(
+        eq(notifications.userId, userId),
+        isNull(notifications.readAt),
+        isNull(notifications.deletedAt),
+      ),
+    );
+};
+
 export const getUnreadCount = async (
   db: dbClient,
   userId: string,
@@ -95,4 +158,3 @@ export const getUnreadCount = async (
 
   return result[0]?.count ?? 0;
 };
-

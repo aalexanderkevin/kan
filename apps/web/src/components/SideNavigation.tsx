@@ -25,6 +25,7 @@ import settingsIconLight from "~/assets/settings-light.json";
 import templatesIconDark from "~/assets/templates-dark.json";
 import templatesIconLight from "~/assets/templates-light.json";
 import ButtonComponent from "~/components/Button";
+import NotificationMenu from "~/components/NotificationMenu";
 import ReactiveButton from "~/components/ReactiveButton";
 import UserMenu from "~/components/UserMenu";
 import WorkspaceMenu from "~/components/WorkspaceMenu";
@@ -205,6 +206,7 @@ export default function SideNavigation({
         </div>
 
         <div className="space-y-2">
+          <NotificationMenu isCollapsed={isCollapsed} />
           <UserMenu
             displayName={user.displayName ?? undefined}
             email={user.email ?? "Email not provided?"}
