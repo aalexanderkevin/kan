@@ -187,7 +187,7 @@ const loggingMiddleware = t.middleware(async ({ path, type, next, ctx, getRawInp
     duration,
     userId: user?.id,
     ...(isCloud && { email: user?.email }),
-    input,
+    input: path.startsWith("privateFiles.") ? undefined : input,
   };
 
   const label = transport === "rest" ? "REST" : "tRPC";

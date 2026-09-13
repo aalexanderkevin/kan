@@ -253,6 +253,13 @@
       "when": 1787616000000,
       "tag": "20260825000000_AddCommentAttachments",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1789291153613,
+      "tag": "20260913091913_AddPrivateFiles",
+      "breakpoints": true
     }
   ]
 }

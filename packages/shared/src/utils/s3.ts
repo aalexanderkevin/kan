@@ -1,3 +1,4 @@
+import type { S3ClientConfig } from "@aws-sdk/client-s3";
 import {
   DeleteObjectCommand,
   GetObjectCommand,
@@ -7,7 +8,9 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { env } from "next-runtime-env";
 
-export function createS3Client() {
+export function createS3Client(
+  options: Pick<S3ClientConfig, "requestChecksumCalculation"> = {},
+) {
   const credentials =
     process.env.S3_ACCESS_KEY_ID && process.env.S3_SECRET_ACCESS_KEY
       ? {
@@ -27,6 +30,7 @@ export function createS3Client() {
     endpoint: process.env.S3_ENDPOINT ?? "",
     forcePathStyle: process.env.S3_FORCE_PATH_STYLE === "true",
     credentials,
+    ...options,
   });
 }
 
@@ -130,4 +134,3 @@ export async function generateAttachmentUrl(
     return null;
   }
 }
-

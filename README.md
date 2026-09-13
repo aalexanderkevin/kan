@@ -209,6 +209,7 @@ pnpm dev
 | `NEXT_PUBLIC_USE_VIRTUAL_HOSTED_URLS`     | Use virtual-hosted style URLs (bucket.domain.com)         | For file uploads (optional)                 | `true`                                                      |
 | `NEXT_PUBLIC_AVATAR_BUCKET_NAME`          | S3 bucket name for avatars                                | For file uploads                            | `avatars`                                                   |
 | `NEXT_PUBLIC_ATTACHMENTS_BUCKET_NAME`     | S3 bucket name for attachments                            | For file uploads                            | `attachments`                                               |
+| `PRIVATE_FILES_BUCKET_NAME` | Dedicated S3 bucket with public access disabled for workspace private files | For private file uploads | `private-files` |
 | `NEXT_PUBLIC_ALLOW_CREDENTIALS`           | Allow email & password login                              | For authentication                          | `true`                                                      |
 | `NEXT_PUBLIC_DISABLE_SIGN_UP`             | Disable sign up                                           | For authentication                          | `false`                                                     |
 | `NEXT_PUBLIC_WHITE_LABEL_HIDE_POWERED_BY` | Hide “Powered by kan.bn” on public boards (self-host)     | For white labelling                         | `true`                                                      |
@@ -367,3 +368,28 @@ Kan is licensed under the [AGPLv3 license](LICENSE).
 ## Contact 📧
 
 For support or to get in touch, please email [henry@kan.bn](mailto:henry@kan.bn) or join our [Discord server](https://discord.gg/e6ejRb6CmT).
+
+
+### Workspace private files
+
+Set `PRIVATE_FILES_BUCKET_NAME` to a dedicated **private** bucket using the existing
+S3 credentials. Disable anonymous/public access and public CDN delivery for this
+bucket. Grant the application GetObject, PutObject, and DeleteObject access (copy
+confirmation requires GetObject on the source and PutObject on the destination).
+Allow browser CORS PUT requests from your application origin with the Content-Type
+header. No public bucket URLs are used.
+
+Configure a lifecycle rule to expire the `pending/` prefix after one day; these
+objects include abandoned uploads. Confirmed files use the `files/` prefix and
+must not use that expiry rule. Room and file records use soft deletion. Deleted
+rooms retain storage objects but cannot issue download links. Individual file
+objects are deleted after the database change commits; cleanup failures are logged
+under `private-files` for operational retry. Backups and retained objects must be
+subject to your normal private-data retention policy.
+
+Workspace admins cannot bypass room membership. Removing or pausing a workspace
+member revokes their room memberships permanently, including ownership; grant
+access again explicitly after reactivation. Transfer ownership before a room owner
+leaves. Previously issued download links expire within 60 seconds; downloaded
+copies cannot be revoked. Privacy is enforced by the application and private bucket,
+not end-to-end encryption against the server operator.

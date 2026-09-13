@@ -15,6 +15,7 @@ export const env = createEnv({
    */
   server: {
     KAN_ADMIN_API_KEY: z.string().optional(),
+    PRIVATE_FILES_BUCKET_NAME: z.string().optional(),
     BETTER_AUTH_SECRET: z.string(),
     BETTER_AUTH_TRUSTED_ORIGINS: z
       .string()

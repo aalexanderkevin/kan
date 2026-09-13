@@ -107,6 +107,18 @@ export default function SideNavigation({
       },
     },
     {
+      name: t`Private files`,
+      href: "/private-files",
+      icon: isDarkMode ? boardsIconDark : boardsIconLight,
+      keyboardShortcut: {
+        type: "SEQUENCE",
+        strokes: [{ key: "G" }, { key: "F" }],
+        action: () => router.push("/private-files"),
+        group: "NAVIGATION",
+        description: t`Go to private files`,
+      },
+    },
+    {
       name: t`Templates`,
       href: "/templates",
       icon: isDarkMode ? templatesIconDark : templatesIconLight,

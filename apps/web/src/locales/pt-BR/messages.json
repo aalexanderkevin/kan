@@ -7514,5 +7514,581 @@
     "comments": [],
     "origin": [["src/components/YouTubeEmbed/EditYouTubeModal.tsx", 147]],
     "translation": "URL do YouTube"
+  },
+  "pmcQd8": {
+    "translation": "Nível de acesso",
+    "message": "Access level",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        75
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        80
+      ]
+    ]
+  },
+  "jd8ll3": {
+    "translation": "Falha na ação",
+    "message": "Action failed",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        24
+      ]
+    ]
+  },
+  "m16xKo": {
+    "translation": "Adicionar",
+    "message": "Add",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        80
+      ]
+    ]
+  },
+  "ArNV4r": {
+    "translation": "Adicionar membro do espaço de trabalho",
+    "message": "Add workspace member",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        79
+      ]
+    ]
+  },
+  "K0RhVO": {
+    "translation": "Voltar aos arquivos privados",
+    "message": "Back to private files",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        151
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        155
+      ]
+    ]
+  },
+  "feRMo1": {
+    "translation": "Escolha um arquivo não vazio de até 50 MB.",
+    "message": "Choose a non-empty file up to 50 MB.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        128
+      ]
+    ]
+  },
+  "7VpPHA": {
+    "translation": "Confirmar",
+    "message": "Confirm",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        100
+      ]
+    ]
+  },
+  "hYgDIe": {
+    "translation": "Criar",
+    "message": "Create",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        42
+      ]
+    ]
+  },
+  "UhM9Qn": {
+    "translation": "Excluir arquivo",
+    "message": "Delete file",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        98
+      ]
+    ]
+  },
+  "k7rlwL": {
+    "translation": "Excluir espaço privado",
+    "message": "Delete room",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        98
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        157
+      ]
+    ]
+  },
+  "mzI/c+": {
+    "translation": "Baixar",
+    "message": "Download",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        163
+      ]
+    ]
+  },
+  "uBAxNB": {
+    "translation": "Editor",
+    "message": "Editor",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        18
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        75
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        80
+      ]
+    ]
+  },
+  "ztMr9/": {
+    "translation": "O envio de arquivos está indisponível. Contate seu administrador para configurar o armazenamento privado.",
+    "message": "File uploads are unavailable. Contact your administrator to configure private storage.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        161
+      ]
+    ]
+  },
+  "AimhXn": {
+    "translation": "Os arquivos enviados pelos editores do espaço aparecerão aqui.",
+    "message": "Files uploaded by room editors will appear here.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        163
+      ]
+    ]
+  },
+  "iRRTSz": {
+    "translation": "Concluindo envio…",
+    "message": "Finishing upload…",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        162
+      ]
+    ]
+  },
+  "3F/09J": {
+    "translation": "Ir para arquivos privados",
+    "message": "Go to private files",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/components/SideNavigation.tsx",
+        118
+      ]
+    ]
+  },
+  "3J2eIE": {
+    "translation": "Arquivos importantes, compartilhados apenas com quem você escolher.",
+    "message": "Important files, shared only with people you choose.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        51
+      ]
+    ]
+  },
+  "uulpLj": {
+    "translation": "Tornar proprietário",
+    "message": "Make owner",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        77
+      ]
+    ]
+  },
+  "zk0Twx": {
+    "translation": "Gerenciar acesso",
+    "message": "Manage access",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        72
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        157
+      ]
+    ]
+  },
+  "aU3gV4": {
+    "translation": "Novo espaço privado",
+    "message": "New private room",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        39
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        52
+      ]
+    ]
+  },
+  "VphsQP": {
+    "translation": "Ainda não há arquivos",
+    "message": "No files yet",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        163
+      ]
+    ]
+  },
+  "6eiiHf": {
+    "translation": "Ainda não há espaços privados",
+    "message": "No private rooms yet",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        54
+      ]
+    ]
+  },
+  "FBYuhL": {
+    "translation": "Somente você e os membros que adicionar podem ver este espaço.",
+    "message": "Only you and the members you add can see this room.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        41
+      ]
+    ]
+  },
+  "LtI9AS": {
+    "translation": "Proprietário",
+    "message": "Owner",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        18
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        74
+      ]
+    ]
+  },
+  "zH0yyQ": {
+    "translation": "Tente novamente. Seu acesso pode ter mudado.",
+    "message": "Please try again. Your access may have changed.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        24
+      ]
+    ]
+  },
+  "L8kwup": {
+    "translation": "Arquivos privados",
+    "message": "Private files",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/components/SideNavigation.tsx",
+        110
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        51
+      ]
+    ]
+  },
+  "t98PWD": {
+    "translation": "Renomear espaço",
+    "message": "Rename room",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        39
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        157
+      ]
+    ]
+  },
+  "bRJ2wf": {
+    "translation": "Nome do espaço",
+    "message": "Room name",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        40
+      ]
+    ]
+  },
+  "FB1raM": {
+    "translation": "Os espaços que você criar ou aos quais receber acesso aparecerão aqui.",
+    "message": "Rooms you create or receive access to will appear here.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        54
+      ]
+    ]
+  },
+  "E5eC82": {
+    "translation": "Selecione um membro",
+    "message": "Select a member",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        79
+      ]
+    ]
+  },
+  "nukNME": {
+    "translation": "O membro selecionado gerenciará este espaço. Você se tornará editor.",
+    "message": "The selected member will manage this room. You will become an editor.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        99
+      ]
+    ]
+  },
+  "wZaK+P": {
+    "translation": "Este arquivo não estará mais disponível para os membros do espaço.",
+    "message": "This file will no longer be available to room members.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        99
+      ]
+    ]
+  },
+  "yzW4nz": {
+    "translation": "Este espaço privado está indisponível ou você não tem mais acesso.",
+    "message": "This private room is unavailable or you no longer have access.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        151
+      ]
+    ]
+  },
+  "tljiVv": {
+    "translation": "Este espaço e todos os seus arquivos ficarão inacessíveis para todos.",
+    "message": "This room and all its files will become inaccessible to everyone.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        99
+      ]
+    ]
+  },
+  "KSnRfc": {
+    "translation": "Transferir propriedade",
+    "message": "Transfer ownership",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        98
+      ]
+    ]
+  },
+  "KDw4GX": {
+    "translation": "Tentar novamente",
+    "message": "Try again",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        54
+      ]
+    ]
+  },
+  "d5RwfT": {
+    "translation": "Não foi possível carregar os espaços privados.",
+    "message": "Unable to load private rooms.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        54
+      ]
+    ]
+  },
+  "Ts1aaz": {
+    "translation": "Não foi possível carregar os membros do espaço.",
+    "message": "Unable to load room members.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        73
+      ]
+    ]
+  },
+  "S8bP8m": {
+    "translation": "Não foi possível enviar o arquivo",
+    "message": "Unable to upload file",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        128
+      ]
+    ]
+  },
+  "2IXDgU": {
+    "translation": "Enviar arquivo",
+    "message": "Upload file",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        158
+      ]
+    ]
+  },
+  "sZr1wW": {
+    "translation": "Envie arquivos importantes de até 50 MB cada.",
+    "message": "Upload important files up to 50 MB each.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        163
+      ]
+    ]
+  },
+  "LLb6gH": {
+    "translation": "Progresso do envio",
+    "message": "Upload progress",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        162
+      ]
+    ]
+  },
+  "M/TIv1": {
+    "translation": "Leitor",
+    "message": "Viewer",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        18
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        75
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        80
+      ]
+    ]
+  },
+  "I9rjhX": {
+    "translation": "Leitores podem baixar arquivos. Editores também podem enviar e excluir arquivos.",
+    "message": "Viewers can download. Editors can also upload and delete files.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        72
+      ]
+    ]
   }
 }

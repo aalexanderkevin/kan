@@ -7514,5 +7514,581 @@
     "comments": [],
     "origin": [["src/components/YouTubeEmbed/EditYouTubeModal.tsx", 147]],
     "translation": "YouTube URL"
+  },
+  "pmcQd8": {
+    "translation": "Уровень доступа",
+    "message": "Access level",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        75
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        80
+      ]
+    ]
+  },
+  "jd8ll3": {
+    "translation": "Действие не выполнено",
+    "message": "Action failed",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        24
+      ]
+    ]
+  },
+  "m16xKo": {
+    "translation": "Добавить",
+    "message": "Add",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        80
+      ]
+    ]
+  },
+  "ArNV4r": {
+    "translation": "Добавить участника рабочего пространства",
+    "message": "Add workspace member",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        79
+      ]
+    ]
+  },
+  "K0RhVO": {
+    "translation": "Назад к приватным файлам",
+    "message": "Back to private files",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        151
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        155
+      ]
+    ]
+  },
+  "feRMo1": {
+    "translation": "Выберите непустой файл размером до 50 МБ.",
+    "message": "Choose a non-empty file up to 50 MB.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        128
+      ]
+    ]
+  },
+  "7VpPHA": {
+    "translation": "Подтвердить",
+    "message": "Confirm",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        100
+      ]
+    ]
+  },
+  "hYgDIe": {
+    "translation": "Создать",
+    "message": "Create",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        42
+      ]
+    ]
+  },
+  "UhM9Qn": {
+    "translation": "Удалить файл",
+    "message": "Delete file",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        98
+      ]
+    ]
+  },
+  "k7rlwL": {
+    "translation": "Удалить приватный раздел",
+    "message": "Delete room",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        98
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        157
+      ]
+    ]
+  },
+  "mzI/c+": {
+    "translation": "Скачать",
+    "message": "Download",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        163
+      ]
+    ]
+  },
+  "uBAxNB": {
+    "translation": "Редактор",
+    "message": "Editor",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        18
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        75
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        80
+      ]
+    ]
+  },
+  "ztMr9/": {
+    "translation": "Загрузка файлов недоступна. Обратитесь к администратору для настройки приватного хранилища.",
+    "message": "File uploads are unavailable. Contact your administrator to configure private storage.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        161
+      ]
+    ]
+  },
+  "AimhXn": {
+    "translation": "Здесь появятся файлы, загруженные редакторами раздела.",
+    "message": "Files uploaded by room editors will appear here.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        163
+      ]
+    ]
+  },
+  "iRRTSz": {
+    "translation": "Завершение загрузки…",
+    "message": "Finishing upload…",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        162
+      ]
+    ]
+  },
+  "3F/09J": {
+    "translation": "Перейти к приватным файлам",
+    "message": "Go to private files",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/components/SideNavigation.tsx",
+        118
+      ]
+    ]
+  },
+  "3J2eIE": {
+    "translation": "Важные файлы, доступные только выбранным вами людям.",
+    "message": "Important files, shared only with people you choose.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        51
+      ]
+    ]
+  },
+  "uulpLj": {
+    "translation": "Назначить владельцем",
+    "message": "Make owner",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        77
+      ]
+    ]
+  },
+  "zk0Twx": {
+    "translation": "Управление доступом",
+    "message": "Manage access",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        72
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        157
+      ]
+    ]
+  },
+  "aU3gV4": {
+    "translation": "Новый приватный раздел",
+    "message": "New private room",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        39
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        52
+      ]
+    ]
+  },
+  "VphsQP": {
+    "translation": "Файлов пока нет",
+    "message": "No files yet",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        163
+      ]
+    ]
+  },
+  "6eiiHf": {
+    "translation": "Приватных разделов пока нет",
+    "message": "No private rooms yet",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        54
+      ]
+    ]
+  },
+  "FBYuhL": {
+    "translation": "Этот раздел виден только вам и добавленным вами участникам.",
+    "message": "Only you and the members you add can see this room.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        41
+      ]
+    ]
+  },
+  "LtI9AS": {
+    "translation": "Владелец",
+    "message": "Owner",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        18
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        74
+      ]
+    ]
+  },
+  "zH0yyQ": {
+    "translation": "Повторите попытку. Возможно, ваши права доступа изменились.",
+    "message": "Please try again. Your access may have changed.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        24
+      ]
+    ]
+  },
+  "L8kwup": {
+    "translation": "Приватные файлы",
+    "message": "Private files",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/components/SideNavigation.tsx",
+        110
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        51
+      ]
+    ]
+  },
+  "t98PWD": {
+    "translation": "Переименовать раздел",
+    "message": "Rename room",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        39
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        157
+      ]
+    ]
+  },
+  "bRJ2wf": {
+    "translation": "Название раздела",
+    "message": "Room name",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        40
+      ]
+    ]
+  },
+  "FB1raM": {
+    "translation": "Здесь появятся разделы, которые вы создадите или к которым получите доступ.",
+    "message": "Rooms you create or receive access to will appear here.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        54
+      ]
+    ]
+  },
+  "E5eC82": {
+    "translation": "Выберите участника",
+    "message": "Select a member",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        79
+      ]
+    ]
+  },
+  "nukNME": {
+    "translation": "Выбранный участник будет управлять разделом. Вы станете редактором.",
+    "message": "The selected member will manage this room. You will become an editor.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        99
+      ]
+    ]
+  },
+  "wZaK+P": {
+    "translation": "Этот файл больше не будет доступен участникам раздела.",
+    "message": "This file will no longer be available to room members.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        99
+      ]
+    ]
+  },
+  "yzW4nz": {
+    "translation": "Этот приватный раздел недоступен или у вас больше нет доступа.",
+    "message": "This private room is unavailable or you no longer have access.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        151
+      ]
+    ]
+  },
+  "tljiVv": {
+    "translation": "Этот раздел и все его файлы станут недоступны для всех.",
+    "message": "This room and all its files will become inaccessible to everyone.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        99
+      ]
+    ]
+  },
+  "KSnRfc": {
+    "translation": "Передать владение",
+    "message": "Transfer ownership",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        98
+      ]
+    ]
+  },
+  "KDw4GX": {
+    "translation": "Повторить",
+    "message": "Try again",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        54
+      ]
+    ]
+  },
+  "d5RwfT": {
+    "translation": "Не удалось загрузить приватные разделы.",
+    "message": "Unable to load private rooms.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        54
+      ]
+    ]
+  },
+  "Ts1aaz": {
+    "translation": "Не удалось загрузить участников раздела.",
+    "message": "Unable to load room members.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        73
+      ]
+    ]
+  },
+  "S8bP8m": {
+    "translation": "Не удалось загрузить файл",
+    "message": "Unable to upload file",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        128
+      ]
+    ]
+  },
+  "2IXDgU": {
+    "translation": "Загрузить файл",
+    "message": "Upload file",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        158
+      ]
+    ]
+  },
+  "sZr1wW": {
+    "translation": "Загружайте важные файлы размером до 50 МБ каждый.",
+    "message": "Upload important files up to 50 MB each.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        163
+      ]
+    ]
+  },
+  "LLb6gH": {
+    "translation": "Ход загрузки",
+    "message": "Upload progress",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        162
+      ]
+    ]
+  },
+  "M/TIv1": {
+    "translation": "Читатель",
+    "message": "Viewer",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        18
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        75
+      ],
+      [
+        "src/views/private-files/index.tsx",
+        80
+      ]
+    ]
+  },
+  "I9rjhX": {
+    "translation": "Читатели могут скачивать файлы. Редакторы также могут загружать и удалять их.",
+    "message": "Viewers can download. Editors can also upload and delete files.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        72
+      ]
+    ]
   }
 }
