@@ -11,6 +11,7 @@ import { useModal } from "~/providers/modal";
 import { usePopup } from "~/providers/popup";
 import { useWorkspace } from "~/providers/workspace";
 import { api } from "~/utils/api";
+import Documents from "./documents";
 
 const fieldClass =
   "w-full rounded-md border border-light-600 bg-light-50 p-2 text-sm text-light-1000 dark:border-dark-600 dark:bg-dark-100 dark:text-dark-1000";
@@ -619,6 +620,12 @@ function RoomContent({
           )}
         </div>
       </header>
+      <Documents
+        workspacePublicId={workspacePublicId}
+        roomPublicId={roomPublicId}
+        canEdit={editor}
+      />
+      <h2 className="mb-4 text-base font-semibold">{t`Files`}</h2>
       {!data.storageConfigured && (
         <p
           role="status"

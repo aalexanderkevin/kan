@@ -187,6 +187,228 @@ async function upload(f: Fixture) {
 }
 
 describe("private files: migrated database and tRPC authorization", () => {
+  scenario(
+    "documents work without S3, persist rich text, and expose only public metadata",
+    async (_tx, f) => {
+      vi.stubEnv("PRIVATE_FILES_BUCKET_NAME", "");
+      const created = await f.editor.createDocument({
+        ...f.input,
+        title: "Team handbook",
+      });
+      const input = { ...f.input, documentPublicId: created.publicId };
+      const initial = await f.viewer.getDocument(input);
+      expect(initial.version).toBe(1);
+      const content = JSON.stringify({
+        type: "doc",
+        content: [
+          {
+            type: "heading",
+            attrs: { level: 1 },
+            content: [{ type: "text", text: "Welcome" }],
+          },
+          {
+            type: "paragraph",
+            content: [
+              { type: "text", text: "Our notes", marks: [{ type: "bold" }] },
+            ],
+          },
+        ],
+      });
+      await f.editor.updateDocument({
+        ...input,
+        version: 1,
+        title: "Updated handbook",
+        content,
+      });
+      const document = await f.viewer.getDocument(input);
+      expect(document.title).toBe("Updated handbook");
+      expect(document.content).toBe(content);
+      expect(document.version).toBe(2);
+      expect(Object.keys(document).sort()).toEqual([
+        "content",
+        "publicId",
+        "role",
+        "roomName",
+        "title",
+        "updatedAt",
+        "version",
+      ]);
+      const listing = await f.viewer.listDocuments(f.input);
+      expect(listing).toHaveLength(1);
+      expect(Object.keys(must(listing[0])).sort()).toEqual([
+        "publicId",
+        "title",
+        "updatedAt",
+        "updatedBy",
+      ]);
+      expect(createPrivateUploadUrl).not.toHaveBeenCalled();
+    },
+  );
+  scenario(
+    "document mutations reject viewers while admin and outsiders cannot discover documents",
+    async (_tx, f) => {
+      const created = await f.owner.createDocument({
+        ...f.input,
+        title: "Secret",
+      });
+      const input = { ...f.input, documentPublicId: created.publicId };
+      const document = await f.owner.getDocument(input);
+      await expect(
+        f.viewer.createDocument({ ...f.input, title: "No" }),
+      ).rejects.toMatchObject({ code: "FORBIDDEN" });
+      await expect(
+        f.viewer.updateDocument({
+          ...input,
+          title: "No",
+          content: document.content,
+          version: 1,
+        }),
+      ).rejects.toMatchObject({ code: "FORBIDDEN" });
+      await expect(
+        f.viewer.deleteDocument({ ...input, version: 1 }),
+      ).rejects.toMatchObject({ code: "FORBIDDEN" });
+      for (const caller of [f.admin, f.outsider, f.guest]) {
+        await expect(caller.listDocuments(f.input)).rejects.toMatchObject({
+          code: "NOT_FOUND",
+        });
+        await expect(caller.getDocument(input)).rejects.toMatchObject({
+          code: "NOT_FOUND",
+        });
+      }
+    },
+  );
+  scenario(
+    "stale saves and deletes cannot overwrite a newer document",
+    async (_tx, f) => {
+      const created = await f.editor.createDocument({
+        ...f.input,
+        title: "Original",
+      });
+      const input = { ...f.input, documentPublicId: created.publicId };
+      const initial = await f.owner.getDocument(input);
+      await f.editor.updateDocument({
+        ...input,
+        version: 1,
+        title: "Editor changes",
+        content: initial.content,
+      });
+      await expect(
+        f.owner.updateDocument({
+          ...input,
+          version: 1,
+          title: "Stale changes",
+          content: initial.content,
+        }),
+      ).rejects.toMatchObject({ code: "CONFLICT" });
+      await expect(
+        f.owner.deleteDocument({ ...input, version: 1 }),
+      ).rejects.toMatchObject({ code: "CONFLICT" });
+      expect((await f.owner.getDocument(input)).title).toBe("Editor changes");
+    },
+  );
+  scenario(
+    "document access is isolated by room and revoked with workspace membership",
+    async (tx, f) => {
+      const created = await f.owner.createDocument({
+        ...f.input,
+        title: "Secret",
+      });
+      const input = { ...f.input, documentPublicId: created.publicId };
+      const other = await f.admin.create({ ...f.scope, name: "Other room" });
+      await expect(
+        f.admin.getDocument({ ...input, roomPublicId: other.publicId }),
+      ).rejects.toMatchObject({ code: "NOT_FOUND" });
+      await tx
+        .update(schema.workspaceMembers)
+        .set({ status: "paused" })
+        .where(eq(schema.workspaceMembers.id, must(f.members[1]).id));
+      await expect(f.editor.getDocument(input)).rejects.toMatchObject({
+        code: "NOT_FOUND",
+      });
+      await tx
+        .update(schema.workspaceMembers)
+        .set({ status: "active" })
+        .where(eq(schema.workspaceMembers.id, must(f.members[1]).id));
+      await expect(f.editor.listDocuments(f.input)).rejects.toMatchObject({
+        code: "NOT_FOUND",
+      });
+    },
+  );
+  scenario(
+    "soft deleted documents and rooms cannot be read or edited and produce private activity",
+    async (tx, f) => {
+      const created = await f.editor.createDocument({
+        ...f.input,
+        title: "Notes",
+      });
+      const input = { ...f.input, documentPublicId: created.publicId };
+      const document = await f.viewer.getDocument(input);
+      await f.editor.deleteDocument({ ...input, version: 1 });
+      expect(await f.viewer.listDocuments(f.input)).toEqual([]);
+      await expect(f.owner.getDocument(input)).rejects.toMatchObject({
+        code: "NOT_FOUND",
+      });
+      await expect(
+        f.editor.updateDocument({
+          ...input,
+          version: 1,
+          title: "Revive",
+          content: document.content,
+        }),
+      ).rejects.toMatchObject({ code: "NOT_FOUND" });
+      const [stored] = await tx
+        .select()
+        .from(schema.privateDocuments)
+        .where(eq(schema.privateDocuments.publicId, created.publicId));
+      expect(must(stored).deletedAt).not.toBeNull();
+      const events = await tx
+        .select()
+        .from(schema.privateFileActivities)
+        .where(
+          eq(schema.privateFileActivities.subjectPublicId, created.publicId),
+        );
+      expect(events.map((event) => event.action)).toEqual([
+        "document.created",
+        "document.deleted",
+      ]);
+      const second = await f.owner.createDocument({
+        ...f.input,
+        title: "Another",
+      });
+      await f.owner.deleteRoom(f.input);
+      await expect(
+        f.viewer.getDocument({ ...f.input, documentPublicId: second.publicId }),
+      ).rejects.toMatchObject({ code: "NOT_FOUND" });
+    },
+  );
+  scenario(
+    "failed document activity rolls back the saved content and revision",
+    async (tx, f) => {
+      const created = await f.owner.createDocument({
+        ...f.input,
+        title: "Original",
+      });
+      const input = { ...f.input, documentPublicId: created.publicId };
+      const document = await f.owner.getDocument(input);
+      await tx.execute(
+        sql`CREATE FUNCTION reject_test_document_activity() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.action = 'document.updated' THEN RAISE EXCEPTION 'Activity failed'; END IF; RETURN NEW; END; $$;`,
+      );
+      await tx.execute(
+        sql`CREATE TRIGGER reject_test_document_activity BEFORE INSERT ON private_file_activity FOR EACH ROW EXECUTE FUNCTION reject_test_document_activity();`,
+      );
+      await expect(
+        f.owner.updateDocument({
+          ...input,
+          version: 1,
+          title: "Changed",
+          content: document.content,
+        }),
+      ).rejects.toThrow();
+      expect((await f.owner.getDocument(input)).title).toBe("Original");
+      expect((await f.owner.getDocument(input)).version).toBe(1);
+    },
+  );
+
   it("exports valid OpenAPI documentation for every private-file procedure", () => {
     const document = generateOpenApiDocument(privateFilesRouter, {
       title: "Private files",

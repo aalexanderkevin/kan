@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import type { dbClient } from "@kan/db/client";
+import * as documentRepo from "@kan/db/repository/private-documents.repo";
 import * as repo from "@kan/db/repository/private-files.repo";
 import { createLogger } from "@kan/logger";
 import {
@@ -13,6 +14,10 @@ import {
   sealPrivateUpload,
 } from "@kan/shared/utils";
 
+import {
+  EMPTY_DOCUMENT,
+  privateDocumentContent,
+} from "../schemas/private-document";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { assertUserInWorkspace } from "../utils/auth";
 
@@ -22,6 +27,17 @@ const publicId = z.string().length(12);
 const workspaceInput = z.object({ workspacePublicId: publicId });
 const roomInput = workspaceInput.extend({ roomPublicId: publicId });
 const fileInput = roomInput.extend({ filePublicId: publicId });
+const documentInput = roomInput.extend({ documentPublicId: publicId });
+const documentVersionInput = documentInput.extend({
+  version: z.number().int().positive(),
+});
+const documentOutput = z.object({
+  publicId,
+  title: z.string(),
+  content: z.string(),
+  version: z.number().int(),
+  updatedAt: z.date(),
+});
 const memberInput = roomInput.extend({ memberPublicId: publicId });
 const name = z.string().trim().min(1).max(255);
 const role = z.enum(["owner", "editor", "viewer"]);
@@ -143,6 +159,173 @@ async function cleanObject(bucket: string, key: string) {
 }
 
 export const privateFilesRouter = createTRPCRouter({
+  listDocuments: procedure(
+    "List private room documents",
+    "GET",
+    "/rooms/{roomPublicId}/documents",
+  )
+    .input(roomInput)
+    .output(
+      z.array(
+        z.object({
+          publicId,
+          title: z.string(),
+          updatedAt: z.date(),
+          updatedBy: z.string().nullable(),
+        }),
+      ),
+    )
+    .query(({ ctx, input }) =>
+      withRoom(ctx.db, ctx.user.id, input, "read", (tx, room) =>
+        documentRepo.list(tx, room.id),
+      ),
+    ),
+  createDocument: procedure(
+    "Create a private document",
+    "POST",
+    "/rooms/{roomPublicId}/documents",
+  )
+    .input(roomInput.extend({ title: name }))
+    .output(z.object({ publicId }))
+    .mutation(({ ctx, input }) =>
+      withRoom(ctx.db, ctx.user.id, input, "edit", async (tx, room) => {
+        const document = await documentRepo.create(
+          tx,
+          room.id,
+          ctx.user.id,
+          input.title,
+          EMPTY_DOCUMENT,
+        );
+        await repo.activity(
+          tx,
+          room.id,
+          ctx.user.id,
+          "document.created",
+          document.publicId,
+        );
+        return { publicId: document.publicId };
+      }),
+    ),
+  getDocument: procedure(
+    "Read a private document",
+    "GET",
+    "/rooms/{roomPublicId}/documents/{documentPublicId}",
+  )
+    .input(documentInput)
+    .output(documentOutput.extend({ role, roomName: z.string() }))
+    .query(({ ctx, input }) =>
+      withRoom(
+        ctx.db,
+        ctx.user.id,
+        input,
+        "read",
+        async (tx, room, _access, grant) => {
+          const document = await documentRepo.get(
+            tx,
+            room.id,
+            input.documentPublicId,
+          );
+          if (!document) throw notFound();
+          return {
+            publicId: document.publicId,
+            title: document.title,
+            content: document.content,
+            version: document.version,
+            updatedAt: document.updatedAt,
+            role: grant.role,
+            roomName: room.name,
+          };
+        },
+      ),
+    ),
+  updateDocument: procedure(
+    "Save a private document",
+    "PATCH",
+    "/rooms/{roomPublicId}/documents/{documentPublicId}",
+  )
+    .input(
+      documentVersionInput.extend({
+        title: name,
+        content: privateDocumentContent,
+      }),
+    )
+    .output(documentOutput)
+    .mutation(({ ctx, input }) =>
+      withRoom(ctx.db, ctx.user.id, input, "edit", async (tx, room) => {
+        const existing = await documentRepo.get(
+          tx,
+          room.id,
+          input.documentPublicId,
+        );
+        if (!existing) throw notFound();
+        const document = await documentRepo.update(
+          tx,
+          existing.id,
+          input.version,
+          ctx.user.id,
+          { title: input.title, content: input.content },
+        );
+        if (!document)
+          throw new TRPCError({
+            code: "CONFLICT",
+            message:
+              "This document has changed. Reload the latest version before saving.",
+          });
+        await repo.activity(
+          tx,
+          room.id,
+          ctx.user.id,
+          "document.updated",
+          document.publicId,
+        );
+        return {
+          publicId: document.publicId,
+          title: document.title,
+          content: document.content,
+          version: document.version,
+          updatedAt: document.updatedAt,
+        };
+      }),
+    ),
+  deleteDocument: procedure(
+    "Delete a private document",
+    "DELETE",
+    "/rooms/{roomPublicId}/documents/{documentPublicId}",
+  )
+    .input(documentVersionInput)
+    .output(success)
+    .mutation(({ ctx, input }) =>
+      withRoom(ctx.db, ctx.user.id, input, "edit", async (tx, room) => {
+        const existing = await documentRepo.get(
+          tx,
+          room.id,
+          input.documentPublicId,
+        );
+        if (!existing) throw notFound();
+        const document = await documentRepo.update(
+          tx,
+          existing.id,
+          input.version,
+          ctx.user.id,
+          { deletedAt: new Date() },
+        );
+        if (!document)
+          throw new TRPCError({
+            code: "CONFLICT",
+            message:
+              "This document has changed. Reload the latest version before deleting.",
+          });
+        await repo.activity(
+          tx,
+          room.id,
+          ctx.user.id,
+          "document.deleted",
+          document.publicId,
+        );
+        return { success: true };
+      }),
+    ),
+
   list: procedure("List accessible private rooms", "GET", "/rooms")
     .input(workspaceInput)
     .output(z.array(roomOutput))

@@ -393,3 +393,19 @@ access again explicitly after reactivation. Transfer ownership before a room own
 leaves. Previously issued download links expire within 60 seconds; downloaded
 copies cannot be revoked. Privacy is enforced by the application and private bucket,
 not end-to-end encryption against the server operator.
+
+#### Docs inside private rooms
+
+Open **Private files**, choose a room, and select **New doc** in its **Docs**
+section. Room owners and editors can create, rename, edit, and delete documents;
+viewers can read them. Documents support headings, bold/italic text, lists, quotes,
+code blocks, and pasted HTTP(S) links. Use **Save** or **Ctrl/Cmd + S** to save.
+Unsaved edits prompt before navigation. When another person saves first, the app
+preserves your draft and asks you to reload instead of overwriting their changes.
+
+Document contents are stored in PostgreSQL and do not need S3. Apply the new
+`AddPrivateDocuments` migration before deploying the updated web image. On the
+existing-Postgres deployment, run the migration step from
+[Updating Kan](DEPLOY_EXISTING_POSTGRES.md#updating-kan), check it succeeds, and
+then recreate the web service. Documents inherit room access and soft deletion;
+there are no public document links, separate document grants, or live co-editing.

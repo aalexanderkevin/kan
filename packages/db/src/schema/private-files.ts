@@ -115,3 +115,27 @@ export const privateFileActivities = pgTable(
   },
   (table) => [index("private_file_activity_room_idx").on(table.roomId)],
 ).enableRLS();
+
+export const privateDocuments = pgTable(
+  "private_document",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    publicId: varchar("publicId", { length: 12 }).notNull().unique(),
+    roomId: bigint("roomId", { mode: "number" })
+      .notNull()
+      .references(() => privateRooms.id, { onDelete: "cascade" }),
+    title: varchar("title", { length: 255 }).notNull(),
+    content: text("content").notNull(),
+    version: integer("version").notNull().default(1),
+    createdBy: uuid("createdBy").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    updatedBy: uuid("updatedBy").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+    deletedAt: timestamp("deletedAt"),
+  },
+  (table) => [index("private_document_room_idx").on(table.roomId)],
+).enableRLS();

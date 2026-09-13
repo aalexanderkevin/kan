@@ -8090,5 +8090,457 @@
         72
       ]
     ]
+  },
+  "KmydK6": {
+    "translation": "Grassetto",
+    "message": "Bold",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        53
+      ]
+    ]
+  },
+  "ijLc3m": {
+    "translation": "Elenco puntato",
+    "message": "Bullet list",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        73
+      ]
+    ]
+  },
+  "4A3Yzu": {
+    "translation": "Blocco di codice",
+    "message": "Code block",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        88
+      ]
+    ]
+  },
+  "vpbop7": {
+    "translation": "Impossibile salvare. La bozza è ancora qui; riprova.",
+    "message": "Could not save. Your draft is still here; try saving again.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        281
+      ]
+    ]
+  },
+  "jDIxNm": {
+    "translation": "Data di modifica",
+    "message": "Date updated",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/documents.tsx",
+        87
+      ]
+    ]
+  },
+  "bcmDph": {
+    "translation": "Elimina documento",
+    "message": "Delete doc",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        237
+      ],
+      [
+        "src/views/private-files/document.tsx",
+        320
+      ]
+    ]
+  },
+  "HUA4Vl": {
+    "translation": "Contenuto del documento",
+    "message": "Document content",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        36
+      ]
+    ]
+  },
+  "RDOlfT": {
+    "translation": "Titolo del documento",
+    "message": "Document title",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        290
+      ],
+      [
+        "src/views/private-files/document.tsx",
+        297
+      ],
+      [
+        "src/views/private-files/documents.tsx",
+        156
+      ]
+    ]
+  },
+  "sER+bs": {
+    "translation": "File",
+    "message": "Files",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/index.tsx",
+        628
+      ]
+    ]
+  },
+  "xgnSgY": {
+    "translation": "Formatta il testo qui sotto. Usa Ctrl/Cmd + S per salvare.",
+    "message": "Format your text below. Use Ctrl/Cmd + S to save.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        301
+      ]
+    ]
+  },
+  "fxmZBN": {
+    "translation": "Formattazione",
+    "message": "Formatting",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        99
+      ]
+    ]
+  },
+  "zgPjoD": {
+    "translation": "Titolo",
+    "message": "Heading",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        63
+      ]
+    ]
+  },
+  "pzutoc": {
+    "translation": "Corsivo",
+    "message": "Italic",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        58
+      ]
+    ]
+  },
+  "K/SbWz": {
+    "translation": "Uscire senza salvare il documento?",
+    "message": "Leave without saving your document?",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        159
+      ]
+    ]
+  },
+  "PZctm0": {
+    "translation": "Caricamento del documento…",
+    "message": "Loading document…",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        50
+      ]
+    ]
+  },
+  "LsbOym": {
+    "translation": "Nuovo documento",
+    "message": "New doc",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/documents.tsx",
+        57
+      ],
+      [
+        "src/views/private-files/documents.tsx",
+        154
+      ]
+    ]
+  },
+  "UOJTbC": {
+    "translation": "Ancora nessun documento. Scrivi qui note, piani o una wiki del team.",
+    "message": "No docs yet. Write notes, plans, or a team wiki here.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/documents.tsx",
+        77
+      ]
+    ]
+  },
+  "r+ocIj": {
+    "translation": "Nessun documento corrispondente.",
+    "message": "No matching documents.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/documents.tsx",
+        76
+      ]
+    ]
+  },
+  "M3G9ZD": {
+    "translation": "Elenco numerato",
+    "message": "Numbered list",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        78
+      ]
+    ]
+  },
+  "ZhhOwV": {
+    "translation": "Citazione",
+    "message": "Quote",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        83
+      ]
+    ]
+  },
+  "H3oH0g": {
+    "translation": "Ripeti",
+    "message": "Redo",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        123
+      ]
+    ]
+  },
+  "kWDocM": {
+    "translation": "Carica l’ultima versione",
+    "message": "Reload latest document",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        286
+      ],
+      [
+        "src/views/private-files/document.tsx",
+        321
+      ]
+    ]
+  },
+  "idD8Ev": {
+    "translation": "Salvato",
+    "message": "Saved",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        229
+      ]
+    ]
+  },
+  "K/F6pa": {
+    "translation": "Salvataggio…",
+    "message": "Saving…",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        226
+      ]
+    ]
+  },
+  "EUZ0cS": {
+    "translation": "Cerca documenti",
+    "message": "Search documents",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/documents.tsx",
+        47
+      ],
+      [
+        "src/views/private-files/documents.tsx",
+        48
+      ]
+    ]
+  },
+  "zP9kb9": {
+    "translation": "Qualcuno ha aggiornato questo documento. La bozza è conservata. Copia le modifiche necessarie prima di ricaricare.",
+    "message": "Someone updated this document. Your draft is preserved. Copy any changes you need before reloading.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        280
+      ]
+    ]
+  },
+  "r05Ezz": {
+    "translation": "Sottotitolo",
+    "message": "Subheading",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        68
+      ]
+    ]
+  },
+  "8IMD1E": {
+    "translation": "Questo documento non è disponibile o non hai più accesso.",
+    "message": "This document is unavailable or you no longer have access.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        53
+      ]
+    ]
+  },
+  "+BYEmN": {
+    "translation": "Questo documento usa gli stessi permessi del suo spazio privato.",
+    "message": "This document uses the same access as its private room.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        218
+      ],
+      [
+        "src/views/private-files/documents.tsx",
+        166
+      ]
+    ]
+  },
+  "5hGOhx": {
+    "translation": "Questo documento non sarà più disponibile per i membri dello spazio.",
+    "message": "This document will no longer be available to room members.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        325
+      ]
+    ]
+  },
+  "8UqimE": {
+    "translation": "Impossibile caricare i documenti.",
+    "message": "Unable to load documents.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        251
+      ],
+      [
+        "src/views/private-files/documents.tsx",
+        65
+      ]
+    ]
+  },
+  "9uI/rE": {
+    "translation": "Annulla",
+    "message": "Undo",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document-editor.tsx",
+        117
+      ]
+    ]
+  },
+  "sCTlv5": {
+    "translation": "Modifiche non salvate",
+    "message": "Unsaved changes",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        228
+      ]
+    ]
+  },
+  "KQsreu": {
+    "translation": "Modificato da",
+    "message": "Updated by",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/documents.tsx",
+        86
+      ]
+    ]
+  },
+  "Ey+0qw": {
+    "translation": "Le modifiche non salvate andranno perse.",
+    "message": "Your unsaved changes will be discarded.",
+    "placeholders": {},
+    "comments": [],
+    "origin": [
+      [
+        "src/views/private-files/document.tsx",
+        326
+      ]
+    ]
   }
 }
