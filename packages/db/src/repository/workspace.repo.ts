@@ -229,6 +229,7 @@ export const getByPublicIdWithMembers = (
               id: true,
               name: true,
               email: true,
+              hrisEmployeeId: true,
               image: true,
             },
           },

@@ -8,7 +8,6 @@ import { sendEmail } from "@kan/email";
 
 import { createDatabaseHooks, createMiddlewareHooks } from "./hooks";
 import { createPlugins } from "./plugins";
-import { configuredProviders } from "./providers";
 
 export const initAuth = (db: dbClient) => {
   const baseURL = env("NEXT_PUBLIC_BASE_URL") || env("BETTER_AUTH_URL");
@@ -32,7 +31,7 @@ export const initAuth = (db: dbClient) => {
       freshAge: 0,
     },
     emailAndPassword: {
-      enabled: env("NEXT_PUBLIC_ALLOW_CREDENTIALS")?.toLowerCase() === "true",
+      enabled: false,
       // Sign-up restriction is handled by the user.create.before database
       // hook which checks for pending invitations, allowing invited users
       // to register even when public sign-up is disabled.
@@ -44,13 +43,19 @@ export const initAuth = (db: dbClient) => {
         });
       },
     },
-    socialProviders: configuredProviders,
+    socialProviders: {},
     user: {
       deleteUser: {
         enabled: true,
       },
       additionalFields: {
         stripeCustomerId: {
+          type: "string",
+          required: false,
+          defaultValue: null,
+          input: false,
+        },
+        hrisEmployeeId: {
           type: "string",
           required: false,
           defaultValue: null,

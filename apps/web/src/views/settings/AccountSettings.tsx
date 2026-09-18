@@ -1,5 +1,4 @@
 import { t } from "@lingui/core/macro";
-import { env } from "next-runtime-env";
 
 import Button from "~/components/Button";
 import FeedbackModal from "~/components/FeedbackModal";
@@ -17,8 +16,7 @@ import UpdateDisplayNameForm from "./components/UpdateDisplayNameForm";
 
 export default function AccountSettings() {
   const { modalContentType, openModal, isOpen } = useModal();
-  const isCredentialsEnabled =
-    env("NEXT_PUBLIC_ALLOW_CREDENTIALS")?.toLowerCase() === "true";
+  const isCredentialsEnabled = false;
   const { data } = api.user.getUser.useQuery();
 
   return (
@@ -40,9 +38,11 @@ export default function AccountSettings() {
 
         <div className="mb-4">
           <h2 className="mb-4 mt-8 text-[14px] font-bold text-neutral-900 dark:text-dark-1000">
-            {t`Email`}
+            {t`Employee ID`}
           </h2>
-          <p className="text-sm text-neutral-700 dark:text-dark-900">{data?.email}</p>
+          <p className="text-sm text-neutral-700 dark:text-dark-900">
+            {data?.hrisEmployeeId ?? t`Not linked to HRIS`}
+          </p>
         </div>
 
         <div className="mb-8 border-t border-light-300 dark:border-dark-300">
@@ -115,7 +115,9 @@ export default function AccountSettings() {
         modalSize="sm"
         isVisible={isOpen && modalContentType === "CHANGE_PASSWORD"}
       >
-        <ChangePasswordFormConfirmation hasPassword={data?.hasPassword ?? false} />
+        <ChangePasswordFormConfirmation
+          hasPassword={data?.hasPassword ?? false}
+        />
       </Modal>
 
       {/* Global modals */}

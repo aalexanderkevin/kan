@@ -22,6 +22,7 @@ export const getById = async (db: dbClient, userId: string) => {
         email: true,
         image: true,
         stripeCustomerId: true,
+        hrisEmployeeId: true,
       },
       with: {
         apiKeys: {
@@ -86,6 +87,30 @@ export const getByEmail = (db: dbClient, email: string) => {
     },
     where: eq(users.email, email),
   });
+};
+
+export const getByHrisEmployeeId = (db: dbClient, hrisEmployeeId: string) => {
+  return db.query.users.findFirst({
+    where: eq(users.hrisEmployeeId, hrisEmployeeId),
+  });
+};
+
+export const createHrisUser = async (
+  db: dbClient,
+  user: { email: string; name: string; hrisEmployeeId: string },
+) => {
+  const [created] = await db
+    .insert(users)
+    .values({
+      email: user.email,
+      name: user.name,
+      emailVerified: true,
+      hrisEmployeeId: user.hrisEmployeeId,
+    })
+    .onConflictDoNothing({ target: users.hrisEmployeeId })
+    .returning();
+
+  return created ?? getByHrisEmployeeId(db, user.hrisEmployeeId);
 };
 
 export const create = async (

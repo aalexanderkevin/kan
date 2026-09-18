@@ -369,9 +369,15 @@ importers:
       '@kan/logger':
         specifier: workspace:^
         version: link:../logger
+      bcryptjs:
+        specifier: ^3.0.2
+        version: 3.0.3
       better-auth:
         specifier: ^1.4.6
         version: 1.4.6(next@16.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      pg:
+        specifier: ^8.16.3
+        version: 8.16.3
     devDependencies:
       '@kan/db':
         specifier: workspace:*
@@ -4635,6 +4641,10 @@ packages:
     engines: {node: '>=10.0.0'}
     deprecated: Security vulnerability fixed in 5.2.1, please upgrade
 
+  bcryptjs@3.0.3:
+    resolution: {integrity: sha512-GlF5wPWnSa/X5LKM1o0wz0suXIINz1iHRLvTS+sLyi7XPbe5ycmYI3DlZqVGZZtDgl4DmasFg7gOB3JYbphV5g==}
+    hasBin: true
+
   before-after-hook@2.2.3:
     resolution: {integrity: sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==}
 
@@ -5591,6 +5601,7 @@ packages:
   eslint@9.34.0:
     resolution: {integrity: sha512-RNCHRX5EwdrESy3Jc9o8ie8Bog+PeYvvSR8sDGoZxNFTvZ4dlxUB3WzQ3bQMztFrSRODGrLLj8g6OFuGY/aiQg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -13395,6 +13406,8 @@ snapshots:
   baseline-browser-mapping@2.9.6: {}
 
   basic-ftp@5.0.5: {}
+
+  bcryptjs@3.0.3: {}
 
   before-after-hook@2.2.3: {}
 

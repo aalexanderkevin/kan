@@ -364,7 +364,7 @@ export default function MembersPage() {
                             memberPublicId={member.publicId}
                             memberId={member.user?.id}
                             memberName={member.user?.name}
-                            memberEmail={member.user?.email ?? member.email}
+                            memberEmail={member.user?.hrisEmployeeId}
                             memberImage={member.user?.image}
                             memberRole={member.role}
                             memberStatus={member.status}

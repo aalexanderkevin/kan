@@ -84,6 +84,31 @@ export const getById = async (db: dbClient, memberId: number) => {
   });
 };
 
+export const getByWorkspaceIdAndUserId = async (
+  db: dbClient,
+  workspaceId: number,
+  userId: string,
+) => {
+  return db.query.workspaceMembers.findFirst({
+    where: and(
+      eq(workspaceMembers.workspaceId, workspaceId),
+      eq(workspaceMembers.userId, userId),
+      isNull(workspaceMembers.deletedAt),
+    ),
+  });
+};
+
+export const activateAsAdmin = async (
+  db: dbClient,
+  memberId: number,
+  roleId: number,
+) => {
+  await db
+    .update(workspaceMembers)
+    .set({ role: "admin", roleId, status: "active", updatedAt: new Date() })
+    .where(eq(workspaceMembers.id, memberId));
+};
+
 export const getByPublicIdsWithUsers = async (
   db: dbClient,
   memberPublicIds: string[],

@@ -126,6 +126,7 @@ export const workspaceRouter = createTRPCRouter({
             : {
                 id: null,
                 name: displayName,
+                hrisEmployeeId: null,
                 image: null,
               };
 

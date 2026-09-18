@@ -29,6 +29,7 @@ const workspaceMemberDetailSchema = z.object({
       id: z.string().nullable(),
       name: z.string().nullable(),
       email: z.string().optional(),
+      hrisEmployeeId: z.string().nullable(),
       image: z.string().nullable(),
     })
     .nullable(),

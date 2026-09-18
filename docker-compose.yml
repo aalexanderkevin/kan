@@ -10,6 +10,10 @@ services:
       target: migrate
     environment:
       - POSTGRES_URL=postgresql://kan:${POSTGRES_PASSWORD}@postgres:5432/kan_db
+      - HRIS_DATABASE_URL=${HRIS_DATABASE_URL}
+      - HRIS_ALLOWED_COMPANY_ID=${HRIS_ALLOWED_COMPANY_ID}
+      - HRIS_BOOTSTRAP_ADMIN_EMPLOYEE_ID=${HRIS_BOOTSTRAP_ADMIN_EMPLOYEE_ID}
+      - HRIS_BOOTSTRAP_WORKSPACE_PUBLIC_ID=${HRIS_BOOTSTRAP_WORKSPACE_PUBLIC_ID}
     depends_on:
       postgres:
         condition: service_healthy

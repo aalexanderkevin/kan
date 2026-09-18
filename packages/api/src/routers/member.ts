@@ -28,17 +28,18 @@ export const memberRouter = createTRPCRouter({
   invite: protectedProcedure
     .meta({
       openapi: {
-        summary: "Invite a member to a workspace",
+        summary: "Grant an HRIS employee access to a workspace",
         method: "POST",
         path: "/workspaces/{workspacePublicId}/members/invite",
-        description: "Invites a member to a workspace",
+        description:
+          "Grants a previously authenticated HRIS employee access to a workspace",
         tags: ["Workspaces"],
         protect: true,
       },
     })
     .input(
       z.object({
-        email: z.string().email(),
+        employeeId: z.string().trim().min(1).max(255),
         workspacePublicId: z.string().min(12),
       }),
     )
@@ -65,13 +66,25 @@ export const memberRouter = createTRPCRouter({
 
       await assertPermission(ctx.db, userId, workspace.id, "member:invite");
 
-      const isInvitedEmailAlreadyMember = workspace.members.some(
-        (member) => member.email === input.email,
+      const existingUser = await userRepo.getByHrisEmployeeId(
+        ctx.db,
+        input.employeeId,
       );
-
-      if (isInvitedEmailAlreadyMember) {
+      if (!existingUser) {
         throw new TRPCError({
-          message: `User with email ${input.email} is already a member of this workspace`,
+          message: "Employee must sign in before access can be granted",
+          code: "NOT_FOUND",
+        });
+      }
+
+      const existingMember = await memberRepo.getByWorkspaceIdAndUserId(
+        ctx.db,
+        workspace.id,
+        existingUser.id,
+      );
+      if (existingMember) {
+        throw new TRPCError({
+          message: "Employee is already a member of this workspace",
           code: "CONFLICT",
         });
       }
@@ -131,8 +144,6 @@ export const memberRouter = createTRPCRouter({
         }
       }
 
-      const existingUser = await userRepo.getByEmail(ctx.db, input.email);
-
       // Get the workspace role to set roleId
       const memberRole = await permissionRepo.getRoleByWorkspaceIdAndName(
         ctx.db,
@@ -142,42 +153,19 @@ export const memberRouter = createTRPCRouter({
 
       const invite = await memberRepo.create(ctx.db, {
         workspaceId: workspace.id,
-        email: input.email,
-        userId: existingUser?.id ?? null,
+        email: existingUser.email,
+        userId: existingUser.id,
         createdBy: userId,
         role: "member",
         roleId: memberRole?.id ?? null,
-        status: "invited",
+        status: "active",
       });
 
       if (!invite)
         throw new TRPCError({
-          message: `Unable to invite user with email ${input.email}`,
+          message: "Unable to grant employee access",
           code: "INTERNAL_SERVER_ERROR",
         });
-
-      const { status } = await ctx.auth.api.signInMagicLink({
-        email: input.email,
-        callbackURL: `/boards?type=invite&memberPublicId=${invite.publicId}`,
-      });
-
-      if (!status) {
-        console.error("Failed to send magic link invitation:", {
-          email: input.email,
-          callbackURL: `/boards?type=invite&memberPublicId=${invite.publicId}`,
-        });
-
-        await memberRepo.softDelete(ctx.db, {
-          memberId: invite.id,
-          deletedAt: new Date(),
-          deletedBy: userId,
-        });
-
-        throw new TRPCError({
-          message: `Failed to send magic link invitation to user with email ${input.email}.`,
-          code: "INTERNAL_SERVER_ERROR",
-        });
-      }
 
       return invite;
     }),

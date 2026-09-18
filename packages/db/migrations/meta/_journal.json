@@ -267,6 +267,13 @@
       "when": 1789315725636,
       "tag": "20260913160845_AddPrivateDocuments",
       "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1789747679041,
+      "tag": "20260918160759_AddHrisEmployeeLogin",
+      "breakpoints": true
     }
   ]
 }

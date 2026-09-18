@@ -170,51 +170,55 @@ pnpm dev
 
 ## Environment Variables 🔐
 
-| Variable                                  | Description                                               | Required                                    | Example                                                     |
-| ----------------------------------------- | --------------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------- |
-| `POSTGRES_URL`                            | PostgreSQL connection URL                                 | To use external database                    | `postgres://user:pass@localhost:5432/db`                    |
-| `REDIS_URL`                               | Redis connection URL                                      | For rate limiting (optional)                | `redis://localhost:6379` or `redis://redis:6379` (Docker)   |
-| `EMAIL_FROM`                              | Sender email address                                      | For Email                                   | `"Kan <hello@mail.kan.bn>"`                                 |
-| `SMTP_HOST`                               | SMTP server hostname                                      | For Email                                   | `smtp.resend.com`                                           |
-| `SMTP_PORT`                               | SMTP server port                                          | For Email                                   | `465`                                                       |
-| `SMTP_USER`                               | SMTP username/email                                       | No                                          | `resend`                                                    |
-| `SMTP_PASSWORD`                           | SMTP password/token                                       | No                                          | `re_xxxx`                                                   |
-| `SMTP_SECURE`                             | Use secure SMTP connection (defaults to true if not set)  | For Email                                   | `true`                                                      |
-| `SMTP_REJECT_UNAUTHORIZED`                | Reject invalid certificates (defaults to true if not set) | For Email                                   | `false`                                                     |
-| `NEXT_PUBLIC_DISABLE_EMAIL`               | To disable all email features                             | For Email                                   | `true`                                                      |
-| `NEXT_PUBLIC_BASE_URL`                    | Base URL of your installation                             | Yes                                         | `http://localhost:3000`                                     |
-| `NEXT_API_BODY_SIZE_LIMIT`                | Maximum API request body size (defaults to 1mb)           | No                                          | `50mb`                                                      |
-| `BETTER_AUTH_ALLOWED_DOMAINS`             | Comma-separated list of allowed domains for OIDC logins   | For OIDC/Social login                       | `example.com,subsidiary.com`                                |
-| `BETTER_AUTH_SECRET`                      | Auth encryption secret                                    | Yes                                         | Random 32+ char string                                      |
-| `BETTER_AUTH_TRUSTED_ORIGINS`             | Allowed callback origins                                  | No                                          | `http://localhost:3000,http://localhost:3001`               |
-| `GOOGLE_CLIENT_ID`                        | Google OAuth client ID                                    | For Google login                            | `xxx.apps.googleusercontent.com`                            |
-| `GOOGLE_CLIENT_SECRET`                    | Google OAuth client secret                                | For Google login                            | `xxx`                                                       |
-| `DISCORD_CLIENT_ID`                       | Discord OAuth client ID                                   | For Discord login                           | `xxx`                                                       |
-| `DISCORD_CLIENT_SECRET`                   | Discord OAuth client secret                               | For Discord login                           | `xxx`                                                       |
-| `GITHUB_CLIENT_ID`                        | GitHub OAuth client ID                                    | For GitHub login                            | `xxx`                                                       |
-| `GITHUB_CLIENT_SECRET`                    | GitHub OAuth client secret                                | For GitHub login                            | `xxx`                                                       |
-| `OIDC_CLIENT_ID`                          | Generic OIDC client ID                                    | For OIDC login                              | `xxx`                                                       |
-| `OIDC_CLIENT_SECRET`                      | Generic OIDC client secret                                | For OIDC login                              | `xxx`                                                       |
-| `OIDC_DISCOVERY_URL`                      | OIDC discovery URL                                        | For OIDC login                              | `https://auth.example.com/.well-known/openid-configuration` |
-| `TRELLO_APP_API_KEY`                      | Trello app API key                                        | For Trello import                           | `xxx`                                                       |
-| `TRELLO_APP_API_SECRET`                   | Trello app API secret                                     | For Trello import                           | `xxx`                                                       |
-| `S3_REGION`                               | S3 storage region                                         | For file uploads                            | `WEUR`                                                      |
-| `S3_ENDPOINT`                             | S3 endpoint URL                                           | For file uploads                            | `https://xxx.r2.cloudflarestorage.com`                      |
-| `S3_ACCESS_KEY_ID`                        | S3 access key                                             | For file uploads (optional with IRSA)       | `xxx`                                                       |
-| `S3_SECRET_ACCESS_KEY`                    | S3 secret key                                             | For file uploads (optional with IRSA)       | `xxx`                                                       |
-| `S3_FORCE_PATH_STYLE`                     | Use path-style URLs for S3                                | For file uploads                            | `true`                                                      |
-| `S3_AVATAR_UPLOAD_LIMIT`                  | Maximum avatar file size in bytes                         | For file uploads                            | `2097152` (2MB)                                             |
-| `NEXT_PUBLIC_STORAGE_URL`                 | Storage service URL                                       | For file uploads                            | `https://storage.kanbn.com`                                 |
-| `NEXT_PUBLIC_STORAGE_DOMAIN`              | Storage domain name                                       | For file uploads                            | `kanbn.com`                                                 |
-| `NEXT_PUBLIC_USE_VIRTUAL_HOSTED_URLS`     | Use virtual-hosted style URLs (bucket.domain.com)         | For file uploads (optional)                 | `true`                                                      |
-| `NEXT_PUBLIC_AVATAR_BUCKET_NAME`          | S3 bucket name for avatars                                | For file uploads                            | `avatars`                                                   |
-| `NEXT_PUBLIC_ATTACHMENTS_BUCKET_NAME`     | S3 bucket name for attachments                            | For file uploads                            | `attachments`                                               |
-| `PRIVATE_FILES_BUCKET_NAME` | Dedicated S3 bucket with public access disabled for workspace private files | For private file uploads | `private-files` |
-| `NEXT_PUBLIC_ALLOW_CREDENTIALS`           | Allow email & password login                              | For authentication                          | `true`                                                      |
-| `NEXT_PUBLIC_DISABLE_SIGN_UP`             | Disable sign up                                           | For authentication                          | `false`                                                     |
-| `NEXT_PUBLIC_WHITE_LABEL_HIDE_POWERED_BY` | Hide “Powered by kan.bn” on public boards (self-host)     | For white labelling                         | `true`                                                      |
-| `KAN_ADMIN_API_KEY`                       | Admin API key for stats and admin endpoints               | For admin/monitoring                        | `your-secret-admin-key`                                     |
-| `LOG_LEVEL`                               | Log verbosity level (debug, info, warn, error)            | No (defaults to debug in dev, info in prod) | `info`                                                      |
+| Variable                                  | Description                                                                 | Required                                    | Example                                                     |
+| ----------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------- |
+| `POSTGRES_URL`                            | PostgreSQL connection URL                                                   | To use external database                    | `postgres://user:pass@localhost:5432/db`                    |
+| `HRIS_DATABASE_URL`                       | Read-only HRIS PostgreSQL connection for employee login                     | Yes for HRIS login                          | `postgres://kan_auth:password@hris:5432/hris`               |
+| `HRIS_ALLOWED_COMPANY_ID`                 | HRIS company ID permitted to authenticate                                   | Yes for HRIS login                          | `2ksILJeMfKv0JR6WLjiKYsDKr6F`                               |
+| `HRIS_BOOTSTRAP_ADMIN_EMPLOYEE_ID`        | Employee ID made workspace admin on first HRIS login                        | Yes for bootstrap                           | `CM11EMP87`                                                 |
+| `HRIS_BOOTSTRAP_WORKSPACE_PUBLIC_ID`      | Workspace public ID for the bootstrap administrator                         | Yes for bootstrap                           | `uin4pw92oht6`                                              |
+| `REDIS_URL`                               | Redis connection URL                                                        | For rate limiting (optional)                | `redis://localhost:6379` or `redis://redis:6379` (Docker)   |
+| `EMAIL_FROM`                              | Sender email address                                                        | For Email                                   | `"Kan <hello@mail.kan.bn>"`                                 |
+| `SMTP_HOST`                               | SMTP server hostname                                                        | For Email                                   | `smtp.resend.com`                                           |
+| `SMTP_PORT`                               | SMTP server port                                                            | For Email                                   | `465`                                                       |
+| `SMTP_USER`                               | SMTP username/email                                                         | No                                          | `resend`                                                    |
+| `SMTP_PASSWORD`                           | SMTP password/token                                                         | No                                          | `re_xxxx`                                                   |
+| `SMTP_SECURE`                             | Use secure SMTP connection (defaults to true if not set)                    | For Email                                   | `true`                                                      |
+| `SMTP_REJECT_UNAUTHORIZED`                | Reject invalid certificates (defaults to true if not set)                   | For Email                                   | `false`                                                     |
+| `NEXT_PUBLIC_DISABLE_EMAIL`               | To disable all email features                                               | For Email                                   | `true`                                                      |
+| `NEXT_PUBLIC_BASE_URL`                    | Base URL of your installation                                               | Yes                                         | `http://localhost:3000`                                     |
+| `NEXT_API_BODY_SIZE_LIMIT`                | Maximum API request body size (defaults to 1mb)                             | No                                          | `50mb`                                                      |
+| `BETTER_AUTH_ALLOWED_DOMAINS`             | Comma-separated list of allowed domains for OIDC logins                     | For OIDC/Social login                       | `example.com,subsidiary.com`                                |
+| `BETTER_AUTH_SECRET`                      | Auth encryption secret                                                      | Yes                                         | Random 32+ char string                                      |
+| `BETTER_AUTH_TRUSTED_ORIGINS`             | Allowed callback origins                                                    | No                                          | `http://localhost:3000,http://localhost:3001`               |
+| `GOOGLE_CLIENT_ID`                        | Google OAuth client ID                                                      | For Google login                            | `xxx.apps.googleusercontent.com`                            |
+| `GOOGLE_CLIENT_SECRET`                    | Google OAuth client secret                                                  | For Google login                            | `xxx`                                                       |
+| `DISCORD_CLIENT_ID`                       | Discord OAuth client ID                                                     | For Discord login                           | `xxx`                                                       |
+| `DISCORD_CLIENT_SECRET`                   | Discord OAuth client secret                                                 | For Discord login                           | `xxx`                                                       |
+| `GITHUB_CLIENT_ID`                        | GitHub OAuth client ID                                                      | For GitHub login                            | `xxx`                                                       |
+| `GITHUB_CLIENT_SECRET`                    | GitHub OAuth client secret                                                  | For GitHub login                            | `xxx`                                                       |
+| `OIDC_CLIENT_ID`                          | Generic OIDC client ID                                                      | For OIDC login                              | `xxx`                                                       |
+| `OIDC_CLIENT_SECRET`                      | Generic OIDC client secret                                                  | For OIDC login                              | `xxx`                                                       |
+| `OIDC_DISCOVERY_URL`                      | OIDC discovery URL                                                          | For OIDC login                              | `https://auth.example.com/.well-known/openid-configuration` |
+| `TRELLO_APP_API_KEY`                      | Trello app API key                                                          | For Trello import                           | `xxx`                                                       |
+| `TRELLO_APP_API_SECRET`                   | Trello app API secret                                                       | For Trello import                           | `xxx`                                                       |
+| `S3_REGION`                               | S3 storage region                                                           | For file uploads                            | `WEUR`                                                      |
+| `S3_ENDPOINT`                             | S3 endpoint URL                                                             | For file uploads                            | `https://xxx.r2.cloudflarestorage.com`                      |
+| `S3_ACCESS_KEY_ID`                        | S3 access key                                                               | For file uploads (optional with IRSA)       | `xxx`                                                       |
+| `S3_SECRET_ACCESS_KEY`                    | S3 secret key                                                               | For file uploads (optional with IRSA)       | `xxx`                                                       |
+| `S3_FORCE_PATH_STYLE`                     | Use path-style URLs for S3                                                  | For file uploads                            | `true`                                                      |
+| `S3_AVATAR_UPLOAD_LIMIT`                  | Maximum avatar file size in bytes                                           | For file uploads                            | `2097152` (2MB)                                             |
+| `NEXT_PUBLIC_STORAGE_URL`                 | Storage service URL                                                         | For file uploads                            | `https://storage.kanbn.com`                                 |
+| `NEXT_PUBLIC_STORAGE_DOMAIN`              | Storage domain name                                                         | For file uploads                            | `kanbn.com`                                                 |
+| `NEXT_PUBLIC_USE_VIRTUAL_HOSTED_URLS`     | Use virtual-hosted style URLs (bucket.domain.com)                           | For file uploads (optional)                 | `true`                                                      |
+| `NEXT_PUBLIC_AVATAR_BUCKET_NAME`          | S3 bucket name for avatars                                                  | For file uploads                            | `avatars`                                                   |
+| `NEXT_PUBLIC_ATTACHMENTS_BUCKET_NAME`     | S3 bucket name for attachments                                              | For file uploads                            | `attachments`                                               |
+| `PRIVATE_FILES_BUCKET_NAME`               | Dedicated S3 bucket with public access disabled for workspace private files | For private file uploads                    | `private-files`                                             |
+| `NEXT_PUBLIC_ALLOW_CREDENTIALS`           | Allow email & password login                                                | For authentication                          | `true`                                                      |
+| `NEXT_PUBLIC_DISABLE_SIGN_UP`             | Disable sign up                                                             | For authentication                          | `false`                                                     |
+| `NEXT_PUBLIC_WHITE_LABEL_HIDE_POWERED_BY` | Hide “Powered by kan.bn” on public boards (self-host)                       | For white labelling                         | `true`                                                      |
+| `KAN_ADMIN_API_KEY`                       | Admin API key for stats and admin endpoints                                 | For admin/monitoring                        | `your-secret-admin-key`                                     |
+| `LOG_LEVEL`                               | Log verbosity level (debug, info, warn, error)                              | No (defaults to debug in dev, info in prod) | `info`                                                      |
 
 See `.env.example` for a complete list of supported environment variables.
 
@@ -368,7 +372,6 @@ Kan is licensed under the [AGPLv3 license](LICENSE).
 ## Contact 📧
 
 For support or to get in touch, please email [henry@kan.bn](mailto:henry@kan.bn) or join our [Discord server](https://discord.gg/e6ejRb6CmT).
-
 
 ### Workspace private files
 

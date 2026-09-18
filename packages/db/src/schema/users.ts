@@ -11,9 +11,9 @@ import { apikey } from "./auth";
 import { boards, userBoardFavorites } from "./boards";
 import { cards } from "./cards";
 import { imports } from "./imports";
+import { integrations } from "./integrations";
 import { lists } from "./lists";
 import { workspaceMembers, workspaces } from "./workspaces";
-import { integrations } from "./integrations";
 
 export const users = pgTable("user", {
   id: uuid("id")
@@ -27,6 +27,7 @@ export const users = pgTable("user", {
   createdAt: timestamp("createdAt").notNull().defaultNow(),
   updatedAt: timestamp("updatedAt").notNull().defaultNow(),
   stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
+  hrisEmployeeId: varchar("hrisEmployeeId", { length: 255 }).unique(),
 }).enableRLS();
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -85,13 +86,16 @@ export const usersToWorkspacesRelations = relations(
   }),
 );
 
-export const userBoardFavoritesRelations = relations(userBoardFavorites, ({ one }) => ({
-  user: one(users, {
-    fields: [userBoardFavorites.userId],
-    references: [users.id],
+export const userBoardFavoritesRelations = relations(
+  userBoardFavorites,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [userBoardFavorites.userId],
+      references: [users.id],
+    }),
+    board: one(boards, {
+      fields: [userBoardFavorites.boardId],
+      references: [boards.id],
+    }),
   }),
-  board: one(boards, {
-    fields: [userBoardFavorites.boardId],
-    references: [boards.id],
-  }),
-}));
+);

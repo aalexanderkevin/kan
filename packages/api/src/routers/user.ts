@@ -27,6 +27,7 @@ export const userRouter = createTRPCRouter({
         name: z.string().nullable(),
         image: z.string().nullable(),
         stripeCustomerId: z.string().nullable(),
+        hrisEmployeeId: z.string().nullable(),
         hasPassword: z.boolean(),
         hasMagicLinkAccount: z.boolean(),
         apiKey: z
@@ -147,31 +148,9 @@ export const userRouter = createTRPCRouter({
           code: "UNAUTHORIZED",
         });
 
-      const existing = await userRepo.getById(ctx.db, userId);
-
-      if (!existing) {
-        throw new TRPCError({
-          message: `User not found`,
-          code: "NOT_FOUND",
-        });
-      }
-
-      if (existing.hasPassword) {
-        throw new TRPCError({
-          message: `Password already set; use change password instead`,
-          code: "BAD_REQUEST",
-        });
-      }
-
-      try {
-        await ctx.auth.api.setPassword({ newPassword: input.newPassword });
-      } catch {
-        throw new TRPCError({
-          message: "Failed to set password",
-          code: "INTERNAL_SERVER_ERROR",
-        });
-      }
-
-      return { success: true };
+      throw new TRPCError({
+        message: "Passwords are managed through HRIS",
+        code: "FORBIDDEN",
+      });
     }),
 });

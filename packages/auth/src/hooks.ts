@@ -22,6 +22,7 @@ type BetterAuthUser = {
   name: string;
   image?: string | null | undefined;
   stripeCustomerId?: string | null | undefined;
+  hrisEmployeeId?: string | null | undefined;
 } & Record<string, unknown>;
 
 export function createDatabaseHooks(db: dbClient) {
@@ -29,6 +30,10 @@ export function createDatabaseHooks(db: dbClient) {
     user: {
       create: {
         async before(user: BetterAuthUser, _context: unknown) {
+          // HRIS users are created by the server-only employee-ID endpoint.
+          // Public sign-up cannot populate this input-disabled field.
+          if (user.hrisEmployeeId) return Promise.resolve(true);
+
           if (env("NEXT_PUBLIC_DISABLE_SIGN_UP")?.toLowerCase() === "true") {
             const pendingInvitation = await memberRepo.getByEmailAndStatus(
               db,
