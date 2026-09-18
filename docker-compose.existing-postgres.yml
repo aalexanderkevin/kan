@@ -22,7 +22,7 @@ services:
     env_file:
       - ${KAN_ENV_FILE:-.env.server}
     environment:
-      NEXT_PUBLIC_ALLOW_CREDENTIALS: "true"
+      NEXT_PUBLIC_ALLOW_CREDENTIALS: "false"
     depends_on:
       migrate:
         condition: service_completed_successfully
