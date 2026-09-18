@@ -41,7 +41,7 @@
     "@better-auth/stripe": "^1.4.6",
     "@kan/logger": "workspace:^",
     "bcryptjs": "^3.0.2",
-    "pg": "^8.16.3",
-    "better-auth": "^1.4.6"
+    "better-auth": "^1.4.6",
+    "pg": "^8.11.3"
   }
 }
