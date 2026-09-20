@@ -20,6 +20,45 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { assertPermission } from "../utils/permissions";
 
 export const workspaceRouter = createTRPCRouter({
+  canCreate: protectedProcedure
+    .meta({
+      openapi: {
+        summary: "Check whether the user can create a workspace",
+        method: "GET",
+        path: "/workspaces/can-create",
+        description:
+          "Checks whether the user is an administrator of the company administration workspace",
+        tags: ["Workspaces"],
+        protect: true,
+      },
+    })
+    .input(z.void())
+    .output(z.boolean())
+    .query(async ({ ctx }) => {
+      const userId = ctx.user?.id;
+      const administrationWorkspacePublicId =
+        process.env.HRIS_BOOTSTRAP_WORKSPACE_PUBLIC_ID;
+
+      if (!userId || !administrationWorkspacePublicId) {
+        return false;
+      }
+
+      const administrationWorkspace = await workspaceRepo.getByPublicId(
+        ctx.db,
+        administrationWorkspacePublicId,
+      );
+
+      if (!administrationWorkspace || administrationWorkspace.deletedAt) {
+        return false;
+      }
+
+      return workspaceRepo.isUserInWorkspace(
+        ctx.db,
+        userId,
+        administrationWorkspace.id,
+        "admin",
+      );
+    }),
   all: protectedProcedure
     .meta({
       openapi: {
@@ -218,12 +257,42 @@ export const workspaceRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.user?.id;
       const userEmail = ctx.user?.email;
+      const administrationWorkspacePublicId =
+        process.env.HRIS_BOOTSTRAP_WORKSPACE_PUBLIC_ID;
 
       if (!userId || !userEmail)
         throw new TRPCError({
           message: `User not authenticated`,
           code: "UNAUTHORIZED",
         });
+
+      if (!administrationWorkspacePublicId) {
+        throw new TRPCError({
+          message: "Workspace creation is not configured",
+          code: "FORBIDDEN",
+        });
+      }
+
+      const administrationWorkspace = await workspaceRepo.getByPublicId(
+        ctx.db,
+        administrationWorkspacePublicId,
+      );
+      const isCompanyAdmin =
+        !!administrationWorkspace &&
+        !administrationWorkspace.deletedAt &&
+        (await workspaceRepo.isUserInWorkspace(
+          ctx.db,
+          userId,
+          administrationWorkspace.id,
+          "admin",
+        ));
+
+      if (!isCompanyAdmin) {
+        throw new TRPCError({
+          message: "Only company administrators can create workspaces",
+          code: "FORBIDDEN",
+        });
+      }
 
       // Check if slug is provided in cloud environment
       if (input.slug && env("NEXT_PUBLIC_KAN_ENV") === "cloud") {
