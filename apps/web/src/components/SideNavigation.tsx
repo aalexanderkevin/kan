@@ -165,20 +165,20 @@ export default function SideNavigation({
     <>
       <nav
         className={twMerge(
-          "flex h-full w-64 flex-col justify-between bg-brand-700 p-3 shadow-xl md:border-r-0 md:py-0 md:pl-0",
+          "flex h-full w-60 flex-col justify-between bg-gradient-to-b from-brand-800 via-brand-700 to-brand-900 p-3 shadow-xl md:border-r-0 md:py-0 md:pl-0",
           isCollapsed && "md:w-auto",
         )}
       >
         <div>
-          <div className="hidden h-[45px] items-center justify-between pb-3 md:flex">
+          <div className="mx-3 hidden h-[72px] items-center justify-between border-b border-white/15 md:flex">
             {!isCollapsed && (
               <Link href="/" className="block">
                 <Image
                   src="/branding/cakra-motor-11-logo.png"
                   alt="Cakra Motor 11"
-                  width={160}
-                  height={44}
-                  className="h-11 w-40 object-contain"
+                  width={132}
+                  height={37}
+                  className="h-9 w-[132px] object-contain"
                   priority
                 />
               </Link>
@@ -186,7 +186,7 @@ export default function SideNavigation({
             <Button
               onClick={toggleCollapse}
               className={twMerge(
-                "flex h-8 items-center justify-center rounded-md text-white hover:bg-white/15",
+                "flex h-8 items-center justify-center rounded-md text-white/80 hover:bg-white/15 hover:text-white",
                 isCollapsed ? "w-full" : "w-8",
               )}
             >
@@ -197,27 +197,32 @@ export default function SideNavigation({
               )}
             </Button>
           </div>
-          <div className="mx-1 mb-4 hidden w-auto border-b border-white/20 md:block" />
-
-          <WorkspaceMenu isCollapsed={isCollapsed} />
-          <ul role="list" className="space-y-1">
-            {navigation.map((item) => (
-              <li key={item.name}>
-                <ReactiveButton
-                  href={item.href}
-                  current={pathname.includes(item.href)}
-                  name={item.name}
-                  json={item.icon}
-                  isCollapsed={isCollapsed}
-                  onCloseSideNav={onCloseSideNav}
-                  keyboardShortcut={item.keyboardShortcut}
-                />
-              </li>
-            ))}
-          </ul>
+          <div className={twMerge("px-3", isCollapsed && "md:px-0")}>
+            <WorkspaceMenu isCollapsed={isCollapsed} />
+            <ul role="list" className="space-y-1">
+              {navigation.map((item) => (
+                <li key={item.name}>
+                  <ReactiveButton
+                    href={item.href}
+                    current={pathname.includes(item.href)}
+                    name={item.name}
+                    json={item.icon}
+                    isCollapsed={isCollapsed}
+                    onCloseSideNav={onCloseSideNav}
+                    keyboardShortcut={item.keyboardShortcut}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div className="space-y-2">
+        <div
+          className={twMerge(
+            "space-y-1 border-t border-white/15 px-3 pt-3",
+            isCollapsed && "md:px-0",
+          )}
+        >
           <NotificationMenu isCollapsed={isCollapsed} />
           <UserMenu
             displayName={user.displayName ?? undefined}

@@ -55,7 +55,7 @@ export default function NotificationMenu({
   return (
     <Menu as="div" className="relative">
       <Menu.Button
-        className="relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white hover:bg-white/15"
+        className="relative flex h-10 w-full items-center gap-3 rounded-lg px-2.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
         title={t`Notifications`}
       >
         <HiOutlineBell className="h-5 w-5 shrink-0" />

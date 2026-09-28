@@ -76,7 +76,7 @@ export default function UserMenu({
           </div>
         ) : (
           <Menu.Button
-            className="flex w-full items-center rounded-md p-1.5 text-white hover:bg-white/15"
+            className="flex h-10 w-full items-center rounded-lg px-2.5 text-white transition-colors hover:bg-white/10"
             title={isCollapsed ? displayName || email : undefined}
           >
             {avatarUrl ? (

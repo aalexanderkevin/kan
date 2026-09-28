@@ -42,7 +42,7 @@ export default function WorkspaceMenu({
   return (
     <>
       <CommandPallette isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      <Menu as="div" className="relative inline-block w-full pb-3 text-left">
+      <Menu as="div" className="relative inline-block w-full pb-4 text-left">
         <div>
           {isLoading ? (
             <div className={twMerge("mb-1 flex", isCollapsed && "md:p-1.5")}>
@@ -57,26 +57,26 @@ export default function WorkspaceMenu({
           ) : (
             <div
               className={twMerge(
-                "flex items-center justify-start gap-1",
+                "flex items-center justify-start gap-2",
                 isCollapsed && "md:flex-col-reverse md:items-center",
               )}
             >
               <Menu.Button
                 className={twMerge(
-                  "mb-1 flex h-[34px] min-w-0 flex-1 items-center justify-start rounded-md p-1.5 text-white hover:bg-white/15",
+                  "flex h-11 min-w-0 flex-1 items-center justify-start rounded-lg border border-white/10 bg-white/10 px-2.5 text-white transition-colors hover:bg-white/15",
                   isCollapsed &&
-                    "md:mb-1.5 md:h-9 md:w-9 md:flex-none md:justify-center md:p-0",
+                    "md:h-10 md:w-10 md:flex-none md:justify-center md:p-0",
                 )}
                 title={isCollapsed ? workspace.name : undefined}
               >
-                <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-indigo-700">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-white/15">
                   <span className="text-xs font-bold leading-none text-white">
                     {workspace.name.charAt(0).toUpperCase()}
                   </span>
                 </span>
                 <span
                   className={twMerge(
-                    "ml-2 min-w-0 flex-1 truncate text-left text-sm font-bold text-white",
+                    "ml-2 min-w-0 flex-1 truncate text-left text-sm font-semibold text-white",
                     isCollapsed && "md:hidden",
                   )}
                 >
@@ -96,8 +96,8 @@ export default function WorkspaceMenu({
               <Tooltip content={commandPaletteShortcutTooltipContent}>
                 <Button
                   className={twMerge(
-                    "mb-1 h-[34px] w-[34px] flex-shrink-0 rounded-lg bg-white/15 p-2 text-white hover:bg-white/25 focus:outline-none",
-                    isCollapsed && "md:mb-2 md:h-9 md:w-9",
+                    "h-11 w-11 flex-shrink-0 rounded-lg border border-white/10 bg-white/10 p-2 text-white transition-colors hover:bg-white/20 focus:outline-none",
+                    isCollapsed && "md:h-10 md:w-10",
                   )}
                   onClick={() => setIsOpen(true)}
                 >
