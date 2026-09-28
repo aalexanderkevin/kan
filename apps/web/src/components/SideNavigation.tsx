@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "@headlessui/react";
@@ -164,7 +165,7 @@ export default function SideNavigation({
     <>
       <nav
         className={twMerge(
-          "flex h-full w-64 flex-col justify-between border-r border-light-300 bg-light-100 p-3 dark:border-dark-300 dark:bg-dark-100 md:border-r-0 md:py-0 md:pl-0",
+          "flex h-full w-64 flex-col justify-between bg-brand-700 p-3 shadow-xl md:border-r-0 md:py-0 md:pl-0",
           isCollapsed && "md:w-auto",
         )}
       >
@@ -172,32 +173,31 @@ export default function SideNavigation({
           <div className="hidden h-[45px] items-center justify-between pb-3 md:flex">
             {!isCollapsed && (
               <Link href="/" className="block">
-                <h1 className="pl-2 text-[16px] font-bold tracking-tight text-neutral-900 dark:text-dark-1000">
-                  cakramotor11
-                </h1>
+                <Image
+                  src="/branding/cakra-motor-11-logo.png"
+                  alt="Cakra Motor 11"
+                  width={160}
+                  height={44}
+                  className="h-11 w-40 object-contain"
+                  priority
+                />
               </Link>
             )}
             <Button
               onClick={toggleCollapse}
               className={twMerge(
-                "flex h-8 items-center justify-center rounded-md hover:bg-light-200 dark:hover:bg-dark-200",
+                "flex h-8 items-center justify-center rounded-md text-white hover:bg-white/15",
                 isCollapsed ? "w-full" : "w-8",
               )}
             >
               {isCollapsed ? (
-                <TbLayoutSidebarLeftExpand
-                  size={18}
-                  className="text-light-900 dark:text-dark-900"
-                />
+                <TbLayoutSidebarLeftExpand size={18} className="text-white" />
               ) : (
-                <TbLayoutSidebarLeftCollapse
-                  size={18}
-                  className="text-light-900 dark:text-dark-900"
-                />
+                <TbLayoutSidebarLeftCollapse size={18} className="text-white" />
               )}
             </Button>
           </div>
-          <div className="mx-1 mb-4 hidden w-auto border-b border-light-300 dark:border-dark-400 md:block" />
+          <div className="mx-1 mb-4 hidden w-auto border-b border-white/20 md:block" />
 
           <WorkspaceMenu isCollapsed={isCollapsed} />
           <ul role="list" className="space-y-1">

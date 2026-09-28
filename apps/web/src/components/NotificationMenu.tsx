@@ -1,7 +1,7 @@
+import { useRouter } from "next/router";
 import { Menu, Transition } from "@headlessui/react";
 import { t } from "@lingui/core/macro";
 import { formatDistanceToNow } from "date-fns";
-import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { HiCheck, HiOutlineBell } from "react-icons/hi2";
 
@@ -36,7 +36,9 @@ export default function NotificationMenu({
     onSettled: refreshNotifications,
   });
 
-  const openNotification = async (notification: (typeof notifications)[number]) => {
+  const openNotification = async (
+    notification: (typeof notifications)[number],
+  ) => {
     if (!notification.readAt) {
       await markAsRead.mutateAsync({
         notificationPublicId: notification.publicId,
@@ -53,13 +55,13 @@ export default function NotificationMenu({
   return (
     <Menu as="div" className="relative">
       <Menu.Button
-        className="relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-light-900 hover:bg-light-200 dark:text-dark-900 dark:hover:bg-dark-200"
+        className="relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-white hover:bg-white/15"
         title={t`Notifications`}
       >
         <HiOutlineBell className="h-5 w-5 shrink-0" />
         {!isCollapsed && <span>{t`Notifications`}</span>}
         {unread > 0 && (
-          <span className="ml-auto inline-flex min-w-5 items-center justify-center rounded-full bg-primary-600 px-1.5 py-0.5 text-[10px] font-bold text-white">
+          <span className="ml-auto inline-flex min-w-5 items-center justify-center rounded-full bg-white px-1.5 py-0.5 text-[10px] font-bold text-brand-700">
             {unread > 99 ? "99+" : unread}
           </span>
         )}
@@ -84,7 +86,7 @@ export default function NotificationMenu({
                 type="button"
                 onClick={() => markAllAsRead.mutate()}
                 disabled={markAllAsRead.isPending}
-                className="text-xs font-medium text-primary-600 hover:underline disabled:opacity-50 dark:text-primary-400"
+                className="text-primary-600 dark:text-primary-400 text-xs font-medium hover:underline disabled:opacity-50"
               >
                 {t`Mark all as read`}
               </button>

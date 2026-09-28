@@ -25,8 +25,8 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata = {
-  title: "Kan",
-  description: "The open source Trello alternative",
+  title: "Cakra Motor 11",
+  description: "Cakra Motor 11 workspace",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -85,7 +85,11 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
         <KeyboardShortcutProvider>
           <LinguiProviderWrapper>
             <FontSizeProvider>
-              <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
                 <ModalProvider>
                   <PopupProvider>
                     {posthogKey ? (

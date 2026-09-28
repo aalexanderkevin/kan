@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { t } from "@lingui/core/macro";
 import { env } from "next-runtime-env";
@@ -186,46 +187,46 @@ export default function Dashboard({
           height: 100vh;
           overflow: hidden;
           min-width: 320px;
-          background-color: ${!isDarkMode ? "hsl(0deg 0% 97.3%)" : "#1c1c1c"};
+          background-color: ${!isDarkMode ? "#f5faff" : "#1c1c1c"};
         }
       `}</style>
       <div className="relative flex h-screen flex-col bg-light-50 dark:bg-dark-50 md:bg-light-100 md:p-3 md:dark:bg-dark-100">
         {/* Mobile Header */}
-        <div className="flex h-12 items-center justify-between border-b border-light-300 bg-light-50 px-3 dark:border-dark-300 dark:bg-dark-50 md:hidden">
+        <div className="flex h-12 items-center justify-between bg-brand-700 px-3 md:hidden">
           <button
             ref={sideNavButtonRef}
             onClick={toggleSideNav}
-            className="rounded p-1.5 transition-all hover:bg-light-200 dark:hover:bg-dark-100"
+            className="rounded p-1.5 transition-all hover:bg-white/15"
           >
             {isSideNavOpen ? (
-              <TbLayoutSidebarLeftCollapse
-                size={20}
-                className="text-light-900 dark:text-dark-900"
-              />
+              <TbLayoutSidebarLeftCollapse size={20} className="text-white" />
             ) : (
-              <TbLayoutSidebarLeftExpand
-                size={20}
-                className="text-light-900 dark:text-dark-900"
-              />
+              <TbLayoutSidebarLeftExpand size={20} className="text-white" />
             )}
           </button>
+
+          <Image
+            src="/branding/cakra-motor-11-logo.png"
+            alt="Cakra Motor 11"
+            width={126}
+            height={35}
+            className="h-8 w-[126px] object-contain"
+            priority
+          />
 
           {hasRightPanel && (
             <button
               ref={rightPanelButtonRef}
               onClick={toggleRightPanel}
-              className="rounded p-1.5 transition-all hover:bg-light-200 dark:hover:bg-dark-100"
+              className="rounded p-1.5 transition-all hover:bg-white/15"
             >
               {isRightPanelOpen ? (
                 <TbLayoutSidebarRightCollapse
                   size={20}
-                  className="text-light-900 dark:text-dark-900"
+                  className="text-white"
                 />
               ) : (
-                <TbLayoutSidebarRightExpand
-                  size={20}
-                  className="text-light-900 dark:text-dark-900"
-                />
+                <TbLayoutSidebarRightExpand size={20} className="text-white" />
               )}
             </button>
           )}

@@ -4,6 +4,12 @@
 
 html {
   font-size: 14px;
+  background-color: #f5faff;
+}
+
+::selection {
+  background: #b9ddff;
+  color: #083f7a;
 }
 
 [contenteditable="true"]:empty:before {

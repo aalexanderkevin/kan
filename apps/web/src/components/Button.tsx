@@ -44,7 +44,7 @@ const Button = ({
             ? "h-10 w-10"
             : "h-9 w-9"),
     variant === "primary" &&
-      "bg-light-1000 dark:bg-dark-1000 dark:text-dark-50",
+      "bg-brand-700 text-white hover:bg-brand-800 dark:bg-brand-600 dark:text-white dark:hover:bg-brand-500",
     variant === "secondary" &&
       "border-[1px] border-light-600 bg-light-50 text-light-1000 dark:border-dark-600 dark:bg-dark-300 dark:text-dark-1000",
     variant === "danger" &&

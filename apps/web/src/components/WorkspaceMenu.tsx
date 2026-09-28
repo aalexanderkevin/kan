@@ -63,7 +63,7 @@ export default function WorkspaceMenu({
             >
               <Menu.Button
                 className={twMerge(
-                  "mb-1 flex h-[34px] min-w-0 flex-1 items-center justify-start rounded-md p-1.5 hover:bg-light-200 dark:hover:bg-dark-200",
+                  "mb-1 flex h-[34px] min-w-0 flex-1 items-center justify-start rounded-md p-1.5 text-white hover:bg-white/15",
                   isCollapsed &&
                     "md:mb-1.5 md:h-9 md:w-9 md:flex-none md:justify-center md:p-0",
                 )}
@@ -76,7 +76,7 @@ export default function WorkspaceMenu({
                 </span>
                 <span
                   className={twMerge(
-                    "ml-2 min-w-0 flex-1 truncate text-left text-sm font-bold text-neutral-900 dark:text-dark-1000",
+                    "ml-2 min-w-0 flex-1 truncate text-left text-sm font-bold text-white",
                     isCollapsed && "md:hidden",
                   )}
                 >
@@ -96,7 +96,7 @@ export default function WorkspaceMenu({
               <Tooltip content={commandPaletteShortcutTooltipContent}>
                 <Button
                   className={twMerge(
-                    "mb-1 h-[34px] w-[34px] flex-shrink-0 rounded-lg bg-light-200 p-2 hover:bg-light-300 focus:outline-none dark:bg-dark-200 dark:hover:bg-dark-300",
+                    "mb-1 h-[34px] w-[34px] flex-shrink-0 rounded-lg bg-white/15 p-2 text-white hover:bg-white/25 focus:outline-none",
                     isCollapsed && "md:mb-2 md:h-9 md:w-9",
                   )}
                   onClick={() => setIsOpen(true)}
