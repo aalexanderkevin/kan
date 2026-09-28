@@ -190,7 +190,7 @@ export default function Dashboard({
           background-color: ${!isDarkMode ? "#f5faff" : "#1c1c1c"};
         }
       `}</style>
-      <div className="relative flex h-screen flex-col bg-light-50 dark:bg-dark-50 md:bg-light-100 md:p-3 md:dark:bg-dark-100">
+      <div className="relative flex h-screen flex-col bg-light-100 dark:bg-dark-50 md:dark:bg-dark-100">
         {/* Mobile Header */}
         <div className="flex h-12 items-center justify-between bg-brand-700 px-3 md:hidden">
           <button
@@ -248,7 +248,7 @@ export default function Dashboard({
             />
           </div>
 
-          <div className="relative h-full min-h-0 w-full overflow-hidden md:rounded-lg md:border md:border-light-300 md:bg-light-50 md:dark:border-dark-300 md:dark:bg-dark-50">
+          <div className="relative h-full min-h-0 w-full overflow-hidden bg-light-100 dark:bg-dark-50 md:dark:bg-dark-100">
             <div className="relative flex h-full min-h-0 w-full overflow-hidden">
               <div className="h-full w-full overflow-y-auto">{children}</div>
 
